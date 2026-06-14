@@ -192,6 +192,8 @@ export const demoTrainingModules: TrainingModule[] = [
     enrolledCount: 6,
     completedCount: 5,
     lessons: 8,
+    practiceScenario: "Rewrite a messy internal status update into a scoped AI request with audience, constraints, and acceptance criteria.",
+    capabilityOutcome: "Learner can turn a real workflow need into a reusable prompt without leaking confidential context.",
   },
   {
     id: "tm_002",
@@ -204,6 +206,8 @@ export const demoTrainingModules: TrainingModule[] = [
     enrolledCount: 6,
     completedCount: 3,
     lessons: 12,
+    practiceScenario: "Build and compare three prompt variants for the same operations report, then explain which output should be trusted.",
+    capabilityOutcome: "Learner can evaluate accuracy, assumptions, and decision-readiness instead of only producing more content.",
   },
   {
     id: "tm_003",
@@ -216,6 +220,8 @@ export const demoTrainingModules: TrainingModule[] = [
     enrolledCount: 5,
     completedCount: 3,
     lessons: 10,
+    practiceScenario: "Review a simulated architecture brief with Claude and capture risks, source anchors, and follow-up questions for the team.",
+    capabilityOutcome: "Learner can use long-context review for engineering judgment while preserving human approval gates.",
   },
   {
     id: "tm_004",
@@ -228,6 +234,8 @@ export const demoTrainingModules: TrainingModule[] = [
     enrolledCount: 4,
     completedCount: 3,
     lessons: 9,
+    practiceScenario: "Draft a prospecting sequence from approved messaging and mark any claims that require human verification before sending.",
+    capabilityOutcome: "Learner can apply AI to role-specific outreach while keeping brand, compliance, and factual-review checks visible.",
   },
   {
     id: "tm_005",
@@ -240,6 +248,8 @@ export const demoTrainingModules: TrainingModule[] = [
     enrolledCount: 6,
     completedCount: 5,
     lessons: 6,
+    practiceScenario: "Classify sample prompts as safe, needs-redaction, or blocked, then document the safer rewrite.",
+    capabilityOutcome: "Learner can spot PII, proprietary data, bias risk, and cases where AI should not be used.",
   },
 ];
 

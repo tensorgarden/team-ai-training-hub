@@ -151,6 +151,10 @@ function TrainingModuleCard({ module }: { module: TrainingModule }) {
       </div>
       <h3 className="font-bold text-slate-900 mb-1">{module.title}</h3>
       <p className="text-sm text-slate-500 mb-3">{module.description}</p>
+      <div className="mb-3 space-y-2 rounded-xl bg-indigo-50/70 p-3 text-xs text-slate-600">
+        <p><span className="font-semibold text-indigo-700">Practice lab:</span> {module.practiceScenario}</p>
+        <p><span className="font-semibold text-indigo-700">Capability check:</span> {module.capabilityOutcome}</p>
+      </div>
       <ProgressBar value={module.completionRate} color={statusColor} />
       <div className="flex justify-between mt-2 text-xs text-slate-400">
         <span>{module.completedCount}/{module.enrolledCount} completed</span>

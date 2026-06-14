@@ -79,4 +79,12 @@ describe("Team AI Training Hub — demo data integrity", () => {
       expect(tm.completionRate).toBeLessThanOrEqual(100);
     }
   });
+
+  it("training modules include hands-on practice and capability checks", () => {
+    for (const tm of demoTrainingModules) {
+      expect(tm.practiceScenario.trim().length, `${tm.id} is missing a practice lab`).toBeGreaterThan(40);
+      expect(tm.capabilityOutcome.trim().length, `${tm.id} is missing a capability outcome`).toBeGreaterThan(40);
+      expect(`${tm.practiceScenario} ${tm.capabilityOutcome}`.toLowerCase()).toMatch(/workflow|role|review|safe|judgment|decision|approval|compliance/);
+    }
+  });
 });

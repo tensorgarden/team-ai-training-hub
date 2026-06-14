@@ -41,6 +41,8 @@ export interface TrainingModule {
   enrolledCount: number;
   completedCount: number;
   lessons: number;
+  practiceScenario: string;
+  capabilityOutcome: string;
 }
 
 export interface AdoptionMetrics {
