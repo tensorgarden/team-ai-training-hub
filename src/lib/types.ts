@@ -45,6 +45,30 @@ export interface TrainingModule {
   capabilityOutcome: string;
 }
 
+export type CapabilityCheckStatus = "pending" | "passed" | "needs_review";
+
+export interface CapabilityCheck {
+  id: string;
+  memberId: string;
+  moduleId: string;
+  status: CapabilityCheckStatus;
+  scenario: string;
+  attemptedAt: string | null;
+  assessorNotes: string | null;
+  independentApplication: boolean;
+}
+
+export interface UsageLog {
+  id: string;
+  memberId: string;
+  promptTemplateId: string | null;
+  channel: UsageChannel;
+  timestamp: string;
+  promptSummary: string;
+  tokensUsed: number;
+  feedback: "positive" | "neutral" | "negative";
+}
+
 export interface AdoptionMetrics {
   totalTeamMembers: number;
   activeUsers: number;
@@ -57,15 +81,6 @@ export interface AdoptionMetrics {
   topCategory: PromptCategory;
   totalPromptTemplates: number;
   averageRating: number;
-}
-
-export interface UsageLog {
-  id: string;
-  memberId: string;
-  promptTemplateId: string | null;
-  channel: UsageChannel;
-  timestamp: string;
-  promptSummary: string;
-  tokensUsed: number;
-  feedback: "positive" | "neutral" | "negative";
+  totalCapabilityChecksPassed: number;
+  totalCapabilityChecks: number;
 }

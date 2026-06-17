@@ -1,4 +1,4 @@
-import type { TeamMember, PromptTemplate, TrainingModule, AdoptionMetrics, UsageLog } from "./types";
+import type { CapabilityCheck, TeamMember, PromptTemplate, TrainingModule, AdoptionMetrics, UsageLog } from "./types";
 
 export const demoTeamMembers: TeamMember[] = [
   {
@@ -268,6 +268,35 @@ export const demoUsageLogs: UsageLog[] = [
   { id: "ul_012", memberId: "mem_002", promptTemplateId: null, channel: "chatgpt", timestamp: "2026-06-08T11:30:00Z", promptSummary: "Draft proposal response for RFP questions", tokensUsed: 3200, feedback: "negative" },
 ];
 
+export const demoCapabilityChecks: CapabilityCheck[] = [
+  // Sarah Chen — passed both beginner and advanced modules
+  { id: "cc_001", memberId: "mem_001", moduleId: "tm_001", status: "passed", scenario: "Independently rewrote three real team status updates into scoped prompts with audience and constraints, then taught two colleagues the pattern.", attemptedAt: "2026-05-10T14:00:00Z", assessorNotes: "Clear command of scope discipline. No confidential-leak patterns in any output. Pattern transfer to teammates is the strongest signal.", independentApplication: true },
+  { id: "cc_002", memberId: "mem_001", moduleId: "tm_002", status: "passed", scenario: "Built and compared three prompt variants for the Q1 marketing attribution report, flagged hallucinated conversion rates in variant B, and selected variant C with supporting evidence for each claim.", attemptedAt: "2026-06-02T11:00:00Z", assessorNotes: "Caught a fabricated metric most trainees miss. Decision documentation is interview-ready for the compliance team.", independentApplication: true },
+  { id: "cc_003", memberId: "mem_001", moduleId: "tm_005", status: "passed", scenario: "Classified 20 sample prompts across safe/needs-redaction/blocked, rewrote 5 redaction-risk prompts, and justified each classification to the data safety officer.", attemptedAt: "2026-05-22T09:00:00Z", assessorNotes: "Correctly flagged two borderline cases that the reference key missed. Judgement call rationale was well-documented.", independentApplication: true },
+
+  // Marcus Webb — passed intermediate, has a pending advanced check
+  { id: "cc_004", memberId: "mem_002", moduleId: "tm_004", status: "passed", scenario: "Drafted a 5-email prospecting sequence from approved messaging, marked three claims requiring legal review before sending, and adjusted tone per industry after compliance feedback.", attemptedAt: "2026-05-18T15:00:00Z", assessorNotes: "Strong at identifying review gates. Sequence quality improved visibly after one compliance-feedback round.", independentApplication: true },
+  { id: "cc_005", memberId: "mem_002", moduleId: "tm_002", status: "pending", scenario: "Evaluate accuracy of three AI-generated competitive research summaries and flag unsupported claims before the team relies on them.", attemptedAt: null, assessorNotes: null, independentApplication: false },
+
+  // Priya Nair — one pass, most modules pending
+  { id: "cc_006", memberId: "mem_003", moduleId: "tm_003", status: "passed", scenario: "Reviewed a real PR auth middleware refactor with Claude, documented three risks with source-anchored evidence, and submitted follow-up questions to the architecture team.", attemptedAt: "2026-05-25T10:00:00Z", assessorNotes: "Risk documentation is concrete and source-anchored. Did not lean on the AI to make decisions — used it for evidence gathering.", independentApplication: true },
+  { id: "cc_007", memberId: "mem_003", moduleId: "tm_002", status: "pending", scenario: "Build a few-shot prompt chain for triaging support tickets by urgency and category, then validate against 10 real tickets.", attemptedAt: null, assessorNotes: null, independentApplication: false },
+  { id: "cc_008", memberId: "mem_003", moduleId: "tm_005", status: "pending", scenario: "Review a colleague's prompt log for PII and proprietary data exposure, document any leaks, and propose safer rewrites.", attemptedAt: null, assessorNotes: null, independentApplication: false },
+
+  // James Okonkwo — pending on most, one needs review
+  { id: "cc_009", memberId: "mem_004", moduleId: "tm_001", status: "passed", scenario: "Turned a rambling internal escalation email into a structured AI request with explicit audience, tone, and output format constraints.", attemptedAt: "2026-05-28T08:00:00Z", assessorNotes: "Solid foundational skills. Ready for intermediate modules.", independentApplication: true },
+  { id: "cc_010", memberId: "mem_004", moduleId: "tm_004", status: "needs_review", scenario: "Generated a prospecting email that included a claim about the prospect's revenue growth that could not be verified from the provided materials.", attemptedAt: "2026-06-05T16:00:00Z", assessorNotes: "The claim about revenue growth is fabricated — not in any source material provided. Hallucination risk under time pressure. Needs to redo with source-verification step before every claim.", independentApplication: false },
+  { id: "cc_011", memberId: "mem_004", moduleId: "tm_005", status: "pending", scenario: "Audit 15 customer support prompt logs for accidental PII exposure and classify each as safe or needs-redaction.", attemptedAt: null, assessorNotes: null, independentApplication: false },
+
+  // Elena Torres — all passed, high adopter
+  { id: "cc_012", memberId: "mem_005", moduleId: "tm_001", status: "passed", scenario: "Taught three HR colleagues how to scope a prompt request using audience, constraints, and acceptance criteria — using only real recruiting workflows as examples.", attemptedAt: "2026-04-15T10:00:00Z", assessorNotes: "Teaching transfer is the strongest signal here. All three colleagues passed their own checks within two weeks.", independentApplication: true },
+  { id: "cc_013", memberId: "mem_005", moduleId: "tm_005", status: "passed", scenario: "Reviewed 25 job descriptions for bias language and PII risks using AI, flagged 4, and rewrote them with documented rationale before publishing.", attemptedAt: "2026-05-08T13:00:00Z", assessorNotes: "Bias flagging was precise with no false positives. Rewrites preserved hiring intent while removing exclusionary language.", independentApplication: true },
+
+  // David Park — executive, struggling to transfer training to independent use
+  { id: "cc_014", memberId: "mem_006", moduleId: "tm_001", status: "needs_review", scenario: "Asked to rewrite a quarterly board summary using AI but pasted in the full confidential board deck with proprietary financials, revenue projections, and employee headcount data before any redaction.", attemptedAt: "2026-06-01T08:30:00Z", assessorNotes: "Pasted confidential board materials into a consumer AI tool. No data safety checks applied despite completing the Responsible AI module. Needs one-on-one coaching on data handling before any further capability checks.", independentApplication: false },
+  { id: "cc_015", memberId: "mem_006", moduleId: "tm_005", status: "pending", scenario: "After coaching, classify 10 executive-typical prompts as safe or needs-redaction, with a written rationale for every classification linked to the data safety policy.", attemptedAt: null, assessorNotes: null, independentApplication: false },
+];
+
 export const demoAdoptionMetrics: AdoptionMetrics = {
   totalTeamMembers: 6,
   activeUsers: 5,
@@ -280,4 +309,6 @@ export const demoAdoptionMetrics: AdoptionMetrics = {
   topCategory: "productivity",
   totalPromptTemplates: 8,
   averageRating: 4.5,
+  totalCapabilityChecksPassed: 8,
+  totalCapabilityChecks: 15,
 };
