@@ -77,6 +77,8 @@ export interface AdoptionMetrics {
   overallTrainingCompletion: number;
   promptsThisWeek: number;
   promptsThisMonth: number;
+  previousWeekPrompts: number;
+  previousMonthPrompts: number;
   trendingUp: boolean;
   topCategory: PromptCategory;
   totalPromptTemplates: number;

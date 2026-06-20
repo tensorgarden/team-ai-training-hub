@@ -91,6 +91,21 @@ describe("Team AI Training Hub — demo data integrity", () => {
       expect(`${tm.practiceScenario} ${tm.capabilityOutcome}`.toLowerCase()).toMatch(/workflow|role|review|safe|judgment|decision|approval|compliance/);
     }
   });
+
+  it("adoption velocity shows positive week-over-week and month-over-month growth", () => {
+    expect(demoAdoptionMetrics.previousWeekPrompts).toBeGreaterThan(0);
+    expect(demoAdoptionMetrics.previousMonthPrompts).toBeGreaterThan(0);
+    expect(demoAdoptionMetrics.promptsThisWeek).toBeGreaterThan(demoAdoptionMetrics.previousWeekPrompts);
+    expect(demoAdoptionMetrics.promptsThisMonth).toBeGreaterThan(demoAdoptionMetrics.previousMonthPrompts);
+    // Week-over-week growth should be between 5% and 50% for a healthy adoption trajectory
+    const wowGrowth = (demoAdoptionMetrics.promptsThisWeek - demoAdoptionMetrics.previousWeekPrompts) / demoAdoptionMetrics.previousWeekPrompts;
+    expect(wowGrowth).toBeGreaterThan(0.05);
+    expect(wowGrowth).toBeLessThan(0.50);
+    // Month-over-month growth should also be positive and in a realistic range
+    const momGrowth = (demoAdoptionMetrics.promptsThisMonth - demoAdoptionMetrics.previousMonthPrompts) / demoAdoptionMetrics.previousMonthPrompts;
+    expect(momGrowth).toBeGreaterThan(0.05);
+    expect(momGrowth).toBeLessThan(0.50);
+  });
 });
 
 describe("Team AI Training Hub — post-training capability checks", () => {

@@ -305,6 +305,8 @@ export const demoAdoptionMetrics: AdoptionMetrics = {
   overallTrainingCompletion: 67,
   promptsThisWeek: 87,
   promptsThisMonth: 342,
+  previousWeekPrompts: 73,
+  previousMonthPrompts: 278,
   trendingUp: true,
   topCategory: "productivity",
   totalPromptTemplates: 8,
