@@ -8,6 +8,7 @@ export interface TeamMember {
   fullName: string;
   email: string;
   role: TeamRole;
+  roleBenchmark: number;
   department: string;
   avatarInitials: string;
   promptsUsed: number;

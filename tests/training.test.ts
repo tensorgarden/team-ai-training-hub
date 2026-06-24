@@ -51,6 +51,22 @@ describe("Team AI Training Hub — demo data integrity", () => {
     }
   });
 
+  it("tracks role-based adoption gaps against benchmarks", () => {
+    const gaps = demoTeamMembers.map(member => ({
+      id: member.id,
+      gap: member.adoptionScore - member.roleBenchmark,
+    }));
+
+    for (const member of demoTeamMembers) {
+      expect(member.roleBenchmark, `${member.fullName} has an unrealistic benchmark`).toBeGreaterThanOrEqual(60);
+      expect(member.roleBenchmark, `${member.fullName} has an unrealistic benchmark`).toBeLessThanOrEqual(95);
+    }
+
+    expect(gaps.some(({ gap }) => gap < 0)).toBe(true);
+    expect(gaps.some(({ gap }) => gap >= 0)).toBe(true);
+    expect(gaps.find(({ id }) => id === "mem_006")?.gap).toBeLessThan(0);
+  });
+
   it("training completion counts do not exceed total modules", () => {
     for (const member of demoTeamMembers) {
       expect(member.trainingCompleted).toBeLessThanOrEqual(member.totalModules);
