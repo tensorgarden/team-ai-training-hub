@@ -67,6 +67,8 @@ export interface UsageLog {
   timestamp: string;
   promptSummary: string;
   tokensUsed: number;
+  manualTimeEstimateMinutes: number;
+  estimatedTimeSavedMinutes: number;
   feedback: "positive" | "neutral" | "negative";
 }
 

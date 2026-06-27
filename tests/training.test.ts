@@ -44,6 +44,26 @@ describe("Team AI Training Hub — demo data integrity", () => {
     }
   });
 
+  it("tracks realistic time saved estimates against manual baselines", () => {
+    let totalManualMinutes = 0;
+    let totalSavedMinutes = 0;
+
+    for (const log of demoUsageLogs) {
+      expect(log.manualTimeEstimateMinutes, `${log.id} manual baseline missing`).toBeGreaterThan(0);
+      expect(log.estimatedTimeSavedMinutes, `${log.id} saved estimate missing`).toBeGreaterThan(0);
+      expect(
+        log.estimatedTimeSavedMinutes,
+        `${log.id} saves more time than the manual baseline`
+      ).toBeLessThan(log.manualTimeEstimateMinutes);
+
+      totalManualMinutes += log.manualTimeEstimateMinutes;
+      totalSavedMinutes += log.estimatedTimeSavedMinutes;
+    }
+
+    expect(totalSavedMinutes).toBeGreaterThan(300);
+    expect(totalSavedMinutes).toBeLessThan(totalManualMinutes);
+  });
+
   it("adoption scores are between 0 and 100", () => {
     for (const member of demoTeamMembers) {
       expect(member.adoptionScore).toBeGreaterThanOrEqual(0);
