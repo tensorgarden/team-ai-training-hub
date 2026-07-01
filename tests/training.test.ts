@@ -5,7 +5,8 @@ import {
   demoTrainingModules,
   demoUsageLogs,
   demoCapabilityChecks,
-  demoAdoptionMetrics
+  demoAdoptionMetrics,
+  demoPrePostBenchmarks
 } from "@/lib/demo-data";
 
 describe("Team AI Training Hub — demo data integrity", () => {
@@ -62,6 +63,34 @@ describe("Team AI Training Hub — demo data integrity", () => {
 
     expect(totalSavedMinutes).toBeGreaterThan(300);
     expect(totalSavedMinutes).toBeLessThan(totalManualMinutes);
+  });
+
+  it("tracks pre/post business benchmarks with defensible improvement deltas", () => {
+    const memberIds = new Set(demoTeamMembers.map(member => member.id));
+    const moduleIds = new Set(demoTrainingModules.map(module => module.id));
+
+    expect(demoPrePostBenchmarks.length).toBeGreaterThanOrEqual(3);
+    expect(demoPrePostBenchmarks.some(benchmark => benchmark.direction === "higher_is_better")).toBe(true);
+    expect(demoPrePostBenchmarks.some(benchmark => benchmark.direction === "lower_is_better")).toBe(true);
+
+    for (const benchmark of demoPrePostBenchmarks) {
+      expect(memberIds.has(benchmark.ownerMemberId), `${benchmark.id} has unknown owner`).toBe(true);
+      expect(benchmark.relatedModuleIds.length, `${benchmark.id} needs a training-module link`).toBeGreaterThan(0);
+      for (const moduleId of benchmark.relatedModuleIds) {
+        expect(moduleIds.has(moduleId), `${benchmark.id} references unknown module ${moduleId}`).toBe(true);
+      }
+
+      expect(benchmark.baselineValue, `${benchmark.id} missing baseline value`).toBeGreaterThan(0);
+      expect(benchmark.postTrainingValue, `${benchmark.id} missing post-training value`).toBeGreaterThan(0);
+      expect(new Date(benchmark.measuredAfter).getTime(), `${benchmark.id} measuredAfter must follow measuredBefore`).toBeGreaterThan(new Date(benchmark.measuredBefore).getTime());
+
+      const improvementRate = benchmark.direction === "lower_is_better"
+        ? (benchmark.baselineValue - benchmark.postTrainingValue) / benchmark.baselineValue
+        : (benchmark.postTrainingValue - benchmark.baselineValue) / benchmark.baselineValue;
+
+      expect(improvementRate, `${benchmark.id} should improve after training`).toBeGreaterThan(0.10);
+      expect(improvementRate, `${benchmark.id} improvement is too aggressive for demo data`).toBeLessThan(0.60);
+    }
   });
 
   it("adoption scores are between 0 and 100", () => {

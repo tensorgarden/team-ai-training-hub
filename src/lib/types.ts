@@ -72,6 +72,22 @@ export interface UsageLog {
   feedback: "positive" | "neutral" | "negative";
 }
 
+export type BenchmarkDirection = "lower_is_better" | "higher_is_better";
+
+export interface PrePostTrainingBenchmark {
+  id: string;
+  department: string;
+  metricName: string;
+  unit: string;
+  baselineValue: number;
+  postTrainingValue: number;
+  direction: BenchmarkDirection;
+  measuredBefore: string;
+  measuredAfter: string;
+  ownerMemberId: string;
+  relatedModuleIds: string[];
+}
+
 export interface AdoptionMetrics {
   totalTeamMembers: number;
   activeUsers: number;

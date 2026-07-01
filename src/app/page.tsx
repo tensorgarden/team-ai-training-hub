@@ -1,5 +1,5 @@
-import { demoTeamMembers, demoPromptTemplates, demoTrainingModules, demoUsageLogs, demoAdoptionMetrics } from "@/lib/demo-data";
-import type { TeamMember, PromptTemplate, TrainingModule, UsageLog } from "@/lib/types";
+import { demoTeamMembers, demoPromptTemplates, demoTrainingModules, demoUsageLogs, demoAdoptionMetrics, demoPrePostBenchmarks } from "@/lib/demo-data";
+import type { TeamMember, PromptTemplate, TrainingModule, UsageLog, PrePostTrainingBenchmark } from "@/lib/types";
 
 // --- Reusable components ---
 
@@ -142,6 +142,57 @@ function TeamAdoption() {
       <h2 className="text-lg font-bold text-slate-900 mb-4">Team Adoption</h2>
       <div>
         {[...demoTeamMembers].sort((a, b) => b.adoptionScore - a.adoptionScore).map(m => <AdoptionRow key={m.id} member={m} />)}
+      </div>
+    </Card>
+  );
+}
+
+
+function BenchmarkImpactRow({ benchmark }: { benchmark: PrePostTrainingBenchmark }) {
+  const member = findMember(benchmark.ownerMemberId);
+  const improvementRate = benchmark.direction === "lower_is_better"
+    ? (benchmark.baselineValue - benchmark.postTrainingValue) / benchmark.baselineValue
+    : (benchmark.postTrainingValue - benchmark.baselineValue) / benchmark.baselineValue;
+  const improvementLabel = `${Math.round(improvementRate * 100)}% improvement`;
+  const directionLabel = benchmark.direction === "lower_is_better" ? "lower is better" : "higher is better";
+
+  return (
+    <div className="rounded-2xl border border-slate-100 bg-white/90 p-4 shadow-sm">
+      <div className="flex items-start justify-between gap-3">
+        <div>
+          <h3 className="text-sm font-bold text-slate-900">{benchmark.metricName}</h3>
+          <p className="mt-0.5 text-xs text-slate-500">{benchmark.department} · owner: {member?.fullName || benchmark.ownerMemberId}</p>
+        </div>
+        <Badge tone="green">{improvementLabel}</Badge>
+      </div>
+      <div className="mt-3 grid grid-cols-2 gap-2 text-xs">
+        <div className="rounded-xl bg-slate-50 p-3">
+          <div className="font-semibold uppercase tracking-wide text-slate-400">Before</div>
+          <div className="mt-1 text-lg font-bold text-slate-800">{benchmark.baselineValue}</div>
+          <div className="text-slate-400">{benchmark.unit}</div>
+        </div>
+        <div className="rounded-xl bg-emerald-50 p-3">
+          <div className="font-semibold uppercase tracking-wide text-emerald-600">After training</div>
+          <div className="mt-1 text-lg font-bold text-emerald-700">{benchmark.postTrainingValue}</div>
+          <div className="text-emerald-600">{directionLabel}</div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function BusinessImpactBenchmarks() {
+  return (
+    <Card>
+      <div className="mb-4 flex items-center justify-between">
+        <h2 className="text-lg font-bold text-slate-900">Pre/Post Business Impact</h2>
+        <Badge tone="green">ROI evidence</Badge>
+      </div>
+      <p className="mb-4 text-sm text-slate-500">
+        Benchmarks pair AI training with operational KPIs so leaders can see behavior change beyond completion rates.
+      </p>
+      <div className="space-y-3">
+        {demoPrePostBenchmarks.map(benchmark => <BenchmarkImpactRow key={benchmark.id} benchmark={benchmark} />)}
       </div>
     </Card>
   );
@@ -291,6 +342,7 @@ export default function Home() {
         </div>
         <div className="space-y-6">
           <TeamAdoption />
+          <BusinessImpactBenchmarks />
           <TeamLeaderboard />
         </div>
       </div>

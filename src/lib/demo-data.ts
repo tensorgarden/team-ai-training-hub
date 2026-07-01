@@ -1,4 +1,4 @@
-import type { CapabilityCheck, TeamMember, PromptTemplate, TrainingModule, AdoptionMetrics, UsageLog } from "./types";
+import type { CapabilityCheck, TeamMember, PromptTemplate, TrainingModule, AdoptionMetrics, UsageLog, PrePostTrainingBenchmark } from "./types";
 
 export const demoTeamMembers: TeamMember[] = [
   {
@@ -301,6 +301,48 @@ export const demoCapabilityChecks: CapabilityCheck[] = [
   // David Park — executive, struggling to transfer training to independent use
   { id: "cc_014", memberId: "mem_006", moduleId: "tm_001", status: "needs_review", scenario: "Asked to rewrite a quarterly board summary using AI but pasted in the full confidential board deck with proprietary financials, revenue projections, and employee headcount data before any redaction.", attemptedAt: "2026-06-01T08:30:00Z", assessorNotes: "Pasted confidential board materials into a consumer AI tool. No data safety checks applied despite completing the Responsible AI module. Needs one-on-one coaching on data handling before any further capability checks.", independentApplication: false },
   { id: "cc_015", memberId: "mem_006", moduleId: "tm_005", status: "pending", scenario: "After coaching, classify 10 executive-typical prompts as safe or needs-redaction, with a written rationale for every classification linked to the data safety policy.", attemptedAt: null, assessorNotes: null, independentApplication: false },
+];
+
+export const demoPrePostBenchmarks: PrePostTrainingBenchmark[] = [
+  {
+    id: "bm_001",
+    department: "Customer Support",
+    metricName: "Average first-response time",
+    unit: "minutes",
+    baselineValue: 54,
+    postTrainingValue: 31,
+    direction: "lower_is_better",
+    measuredBefore: "2026-04-01T09:00:00Z",
+    measuredAfter: "2026-06-15T09:00:00Z",
+    ownerMemberId: "mem_004",
+    relatedModuleIds: ["tm_001", "tm_005"],
+  },
+  {
+    id: "bm_002",
+    department: "Sales",
+    metricName: "Rep research prep time",
+    unit: "minutes per call",
+    baselineValue: 45,
+    postTrainingValue: 24,
+    direction: "lower_is_better",
+    measuredBefore: "2026-04-03T09:00:00Z",
+    measuredAfter: "2026-06-17T09:00:00Z",
+    ownerMemberId: "mem_002",
+    relatedModuleIds: ["tm_004", "tm_002"],
+  },
+  {
+    id: "bm_003",
+    department: "Marketing",
+    metricName: "Campaign brief quality score",
+    unit: "review score",
+    baselineValue: 72,
+    postTrainingValue: 86,
+    direction: "higher_is_better",
+    measuredBefore: "2026-04-05T09:00:00Z",
+    measuredAfter: "2026-06-18T09:00:00Z",
+    ownerMemberId: "mem_001",
+    relatedModuleIds: ["tm_002", "tm_005"],
+  },
 ];
 
 export const demoAdoptionMetrics: AdoptionMetrics = {
