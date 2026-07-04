@@ -1,5 +1,5 @@
-import { demoTeamMembers, demoPromptTemplates, demoTrainingModules, demoUsageLogs, demoAdoptionMetrics, demoPrePostBenchmarks } from "@/lib/demo-data";
-import type { TeamMember, PromptTemplate, TrainingModule, UsageLog, PrePostTrainingBenchmark } from "@/lib/types";
+import { demoTeamMembers, demoPromptTemplates, demoTrainingModules, demoUsageLogs, demoAdoptionMetrics, demoPrePostBenchmarks, demoCapabilityChecks } from "@/lib/demo-data";
+import type { TeamMember, PromptTemplate, TrainingModule, UsageLog, PrePostTrainingBenchmark, CapabilityCheck } from "@/lib/types";
 
 // --- Reusable components ---
 
@@ -198,6 +198,46 @@ function BusinessImpactBenchmarks() {
   );
 }
 
+function ReadinessReviewRow({ check }: { check: CapabilityCheck }) {
+  const member = findMember(check.memberId);
+  const owner = check.reviewOwnerMemberId ? findMember(check.reviewOwnerMemberId) : undefined;
+  const dueLabel = check.reviewDueAt
+    ? new Date(check.reviewDueAt).toLocaleDateString("en-US", { month: "short", day: "numeric" })
+    : "Unscheduled";
+
+  return (
+    <div className="rounded-2xl border border-amber-100 bg-amber-50/60 p-4 text-sm">
+      <div className="flex items-start justify-between gap-3">
+        <div>
+          <h3 className="font-bold text-slate-900">{member?.fullName || check.memberId}</h3>
+          <p className="mt-0.5 text-xs text-amber-700">Owner: {owner?.fullName || check.reviewOwnerMemberId || "unassigned"} · due {dueLabel}</p>
+        </div>
+        <Badge tone="amber">needs review</Badge>
+      </div>
+      <p className="mt-2 text-xs leading-5 text-slate-600">{check.remediationPlan || "No remediation plan recorded."}</p>
+    </div>
+  );
+}
+
+function ReadinessReviewQueue() {
+  const reviewChecks = demoCapabilityChecks.filter(check => check.status === "needs_review");
+
+  return (
+    <Card>
+      <div className="mb-4 flex items-center justify-between">
+        <h2 className="text-lg font-bold text-slate-900">Readiness Review Queue</h2>
+        <Badge tone="amber">{reviewChecks.length} action items</Badge>
+      </div>
+      <p className="mb-4 text-sm text-slate-500">
+        Training completion is not treated as readiness until failed transfer checks have an owner, due date, and remediation plan.
+      </p>
+      <div className="space-y-3">
+        {reviewChecks.map(check => <ReadinessReviewRow key={check.id} check={check} />)}
+      </div>
+    </Card>
+  );
+}
+
 // --- Training modules ---
 
 function TrainingModuleCard({ module }: { module: TrainingModule }) {
@@ -342,6 +382,7 @@ export default function Home() {
         </div>
         <div className="space-y-6">
           <TeamAdoption />
+          <ReadinessReviewQueue />
           <BusinessImpactBenchmarks />
           <TeamLeaderboard />
         </div>

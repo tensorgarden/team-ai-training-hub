@@ -57,6 +57,9 @@ export interface CapabilityCheck {
   attemptedAt: string | null;
   assessorNotes: string | null;
   independentApplication: boolean;
+  reviewOwnerMemberId?: string;
+  reviewDueAt?: string;
+  remediationPlan?: string;
 }
 
 export interface UsageLog {

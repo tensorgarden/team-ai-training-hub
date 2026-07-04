@@ -213,6 +213,28 @@ describe("Team AI Training Hub — post-training capability checks", () => {
     }
   });
 
+  it("needs-review capability checks have accountable remediation plans", () => {
+    const needsReview = demoCapabilityChecks.filter(cc => cc.status === "needs_review");
+    expect(needsReview.length).toBeGreaterThan(0);
+
+    for (const cc of needsReview) {
+      const ownerId = cc.reviewOwnerMemberId ?? "";
+      const dueAt = cc.reviewDueAt ?? "";
+      const attemptedAt = cc.attemptedAt ?? "";
+
+      expect(memberIds.has(ownerId), `${cc.id} has no valid remediation owner`).toBe(true);
+      expect(dueAt, `${cc.id} has no remediation due date`).toBeTruthy();
+      expect(cc.remediationPlan?.trim().length ?? 0, `${cc.id} remediation plan is too thin`).toBeGreaterThan(80);
+
+      const dueTime = new Date(dueAt).getTime();
+      const attemptedTime = new Date(attemptedAt).getTime();
+      const daysToReview = (dueTime - attemptedTime) / (1000 * 60 * 60 * 24);
+
+      expect(dueTime, `${cc.id} remediation due date must follow the failed check`).toBeGreaterThan(attemptedTime);
+      expect(daysToReview, `${cc.id} remediation due date is not near-term`).toBeLessThanOrEqual(14);
+    }
+  });
+
   it("high-adoption members have at least one passed capability check", () => {
     const highAdopters = demoTeamMembers.filter(m => m.adoptionScore >= 85);
     expect(highAdopters.length).toBeGreaterThan(0);
