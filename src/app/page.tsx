@@ -46,7 +46,9 @@ function findMember(id: string): TeamMember | undefined { return demoTeamMembers
 
 function HeroStats() {
   const m = demoAdoptionMetrics;
-  const minutesSaved = demoUsageLogs.reduce((sum, log) => sum + log.estimatedTimeSavedMinutes, 0);
+  const minutesSaved = demoUsageLogs
+    .filter(log => log.roiEligible)
+    .reduce((sum, log) => sum + log.estimatedTimeSavedMinutes, 0);
   const hoursSaved = Math.round((minutesSaved / 60) * 10) / 10;
   return (
     <div className="grid grid-cols-2 md:grid-cols-5 gap-4 mb-8">
@@ -284,6 +286,8 @@ function UsageLogRow({ log }: { log: UsageLog }) {
   const member = findMember(log.memberId);
   const template = log.promptTemplateId ? demoPromptTemplates.find(pt => pt.id === log.promptTemplateId) : null;
   const channelIcon: Record<string, string> = { chatgpt: "🤖", claude: "🧠", api: "⚡", copilot: "💻" };
+  const governanceTone = log.governanceStatus === "approved" ? "green" : "amber";
+  const governanceLabel = log.governanceStatus === "approved" ? "ROI eligible" : "Review before ROI";
   return (
     <div className="flex gap-3 items-start py-3 border-b border-slate-100 last:border-b-0">
       <span className="mt-1.5"><StatusDot status={log.feedback} /></span>
@@ -293,12 +297,16 @@ function UsageLogRow({ log }: { log: UsageLog }) {
           <span className="text-xs text-slate-400">{new Date(log.timestamp).toLocaleDateString("en-US", { month: "short", day: "numeric", hour: "2-digit", minute: "2-digit" })}</span>
         </div>
         <p className="text-sm text-slate-600 mt-0.5">{log.promptSummary}</p>
-        <div className="flex gap-2 mt-1">
+        <div className="flex flex-wrap gap-2 mt-1">
           <span className="text-xs text-slate-400">{channelIcon[log.channel] || "?"} {log.channel}</span>
           {template && <Badge tone="slate">{template.title}</Badge>}
           <span className="text-xs text-slate-400">{log.tokensUsed.toLocaleString()} tokens</span>
           <span className="text-xs text-slate-400">{log.estimatedTimeSavedMinutes} min saved</span>
+          <Badge tone={governanceTone}>{governanceLabel}</Badge>
         </div>
+        {log.governanceReviewReason && (
+          <p className="mt-2 rounded-xl bg-amber-50 p-2 text-xs leading-5 text-amber-800">{log.governanceReviewReason}</p>
+        )}
       </div>
     </div>
   );
@@ -311,6 +319,9 @@ function UsageFeed() {
         <h2 className="text-lg font-bold text-slate-900">Recent Prompt Usage</h2>
         <Badge tone="blue">{demoUsageLogs.length} entries</Badge>
       </div>
+      <p className="mb-3 text-sm text-slate-500">
+        Review-required usage is visible but excluded from ROI totals until governance clears the workflow.
+      </p>
       <div>{demoUsageLogs.map(ul => <UsageLogRow key={ul.id} log={ul} />)}</div>
     </Card>
   );

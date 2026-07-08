@@ -65,6 +65,31 @@ describe("Team AI Training Hub — demo data integrity", () => {
     expect(totalSavedMinutes).toBeLessThan(totalManualMinutes);
   });
 
+  it("keeps governance-review usage out of ROI credit", () => {
+    const reviewRequired = demoUsageLogs.filter(log => log.governanceStatus === "needs_review");
+    const eligibleSavedMinutes = demoUsageLogs
+      .filter(log => log.roiEligible)
+      .reduce((sum, log) => sum + log.estimatedTimeSavedMinutes, 0);
+    const allSavedMinutes = demoUsageLogs.reduce((sum, log) => sum + log.estimatedTimeSavedMinutes, 0);
+
+    expect(reviewRequired.length).toBeGreaterThan(0);
+    expect(eligibleSavedMinutes).toBeLessThan(allSavedMinutes);
+
+    for (const log of demoUsageLogs) {
+      if (log.governanceStatus === "needs_review") {
+        expect(log.roiEligible, `${log.id} should not count toward ROI before governance review`).toBe(false);
+        expect(log.governanceReviewReason?.trim().length ?? 0, `${log.id} needs a review reason`).toBeGreaterThan(50);
+      } else {
+        expect(log.roiEligible, `${log.id} should count only after approval`).toBe(true);
+        expect(log.governanceReviewReason, `${log.id} should not carry a review reason`).toBeNull();
+      }
+    }
+
+    const boardSummary = demoUsageLogs.find(log => log.id === "ul_008");
+    expect(boardSummary?.governanceStatus).toBe("needs_review");
+    expect(boardSummary?.roiEligible).toBe(false);
+  });
+
   it("tracks pre/post business benchmarks with defensible improvement deltas", () => {
     const memberIds = new Set(demoTeamMembers.map(member => member.id));
     const moduleIds = new Set(demoTrainingModules.map(module => module.id));

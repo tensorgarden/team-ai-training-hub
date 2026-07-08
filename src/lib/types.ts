@@ -2,6 +2,7 @@ export type TrainingStatus = "not_started" | "in_progress" | "completed";
 export type PromptCategory = "sales" | "marketing" | "support" | "engineering" | "hr" | "productivity" | "data_analysis" | "creative";
 export type TeamRole = "sales" | "marketing" | "engineering" | "support" | "hr" | "executive";
 export type UsageChannel = "chatgpt" | "claude" | "api" | "copilot";
+export type UsageGovernanceStatus = "approved" | "needs_review";
 
 export interface TeamMember {
   id: string;
@@ -72,6 +73,9 @@ export interface UsageLog {
   tokensUsed: number;
   manualTimeEstimateMinutes: number;
   estimatedTimeSavedMinutes: number;
+  governanceStatus: UsageGovernanceStatus;
+  governanceReviewReason: string | null;
+  roiEligible: boolean;
   feedback: "positive" | "neutral" | "negative";
 }
 
