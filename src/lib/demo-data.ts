@@ -200,6 +200,8 @@ export const demoTrainingModules: TrainingModule[] = [
     lessons: 8,
     practiceScenario: "Rewrite a messy internal status update into a scoped AI request with audience, constraints, and acceptance criteria.",
     capabilityOutcome: "Learner can turn a real workflow need into a reusable prompt without leaking confidential context.",
+    reinforcementCadenceDays: 21,
+    reinforcementActivity: "Repeat the status-update lab with a new team artifact and peer-review the prompt for confidential context before reuse.",
   },
   {
     id: "tm_002",
@@ -214,6 +216,8 @@ export const demoTrainingModules: TrainingModule[] = [
     lessons: 12,
     practiceScenario: "Build and compare three prompt variants for the same operations report, then explain which output should be trusted.",
     capabilityOutcome: "Learner can evaluate accuracy, assumptions, and decision-readiness instead of only producing more content.",
+    reinforcementCadenceDays: 30,
+    reinforcementActivity: "Re-run the comparison exercise on a current report, document unsupported claims, and have a reviewer challenge the chosen output.",
   },
   {
     id: "tm_003",
@@ -228,6 +232,8 @@ export const demoTrainingModules: TrainingModule[] = [
     lessons: 10,
     practiceScenario: "Review a simulated architecture brief with Claude and capture risks, source anchors, and follow-up questions for the team.",
     capabilityOutcome: "Learner can use long-context review for engineering judgment while preserving human approval gates.",
+    reinforcementCadenceDays: 30,
+    reinforcementActivity: "Audit a fresh architecture brief for source-grounded risks and repeat the human-approval handoff with an engineering peer.",
   },
   {
     id: "tm_004",
@@ -242,6 +248,8 @@ export const demoTrainingModules: TrainingModule[] = [
     lessons: 9,
     practiceScenario: "Draft a prospecting sequence from approved messaging and mark any claims that require human verification before sending.",
     capabilityOutcome: "Learner can apply AI to role-specific outreach while keeping brand, compliance, and factual-review checks visible.",
+    reinforcementCadenceDays: 21,
+    reinforcementActivity: "Retake the outreach exercise with a new account and require a peer to verify every external claim before the sequence is approved.",
   },
   {
     id: "tm_005",
@@ -256,6 +264,8 @@ export const demoTrainingModules: TrainingModule[] = [
     lessons: 6,
     practiceScenario: "Classify sample prompts as safe, needs-redaction, or blocked, then document the safer rewrite.",
     capabilityOutcome: "Learner can spot PII, proprietary data, bias risk, and cases where AI should not be used.",
+    reinforcementCadenceDays: 14,
+    reinforcementActivity: "Review a rotating set of policy-edge prompts, record the safe handling decision, and escalate one ambiguous case for discussion.",
   },
 ];
 

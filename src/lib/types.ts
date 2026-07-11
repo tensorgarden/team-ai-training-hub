@@ -45,6 +45,8 @@ export interface TrainingModule {
   lessons: number;
   practiceScenario: string;
   capabilityOutcome: string;
+  reinforcementCadenceDays: number;
+  reinforcementActivity: string;
 }
 
 export type CapabilityCheckStatus = "pending" | "passed" | "needs_review";

@@ -182,6 +182,15 @@ describe("Team AI Training Hub — demo data integrity", () => {
     }
   });
 
+  it("schedules concrete reinforcement so training is not a one-time event", () => {
+    for (const tm of demoTrainingModules) {
+      expect(tm.reinforcementCadenceDays, `${tm.id} reinforcement is too frequent`).toBeGreaterThanOrEqual(14);
+      expect(tm.reinforcementCadenceDays, `${tm.id} reinforcement is too infrequent`).toBeLessThanOrEqual(30);
+      expect(tm.reinforcementActivity.trim().length, `${tm.id} needs a concrete reinforcement activity`).toBeGreaterThan(80);
+      expect(tm.reinforcementActivity.toLowerCase(), `${tm.id} reinforcement is not applied practice`).toMatch(/repeat|re-run|audit|retake|review/);
+    }
+  });
+
   it("adoption velocity shows positive week-over-week and month-over-month growth", () => {
     expect(demoAdoptionMetrics.previousWeekPrompts).toBeGreaterThan(0);
     expect(demoAdoptionMetrics.previousMonthPrompts).toBeGreaterThan(0);
