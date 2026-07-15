@@ -13,6 +13,9 @@ export const demoTeamMembers: TeamMember[] = [
     adoptionScore: 94,
     trainingCompleted: 5,
     totalModules: 5,
+    adoptionCoachMemberId: null,
+    nextCoachingAt: null,
+    coachingFocus: null,
     joinedAt: "2025-03-15T09:00:00Z",
   },
   {
@@ -27,6 +30,9 @@ export const demoTeamMembers: TeamMember[] = [
     adoptionScore: 88,
     trainingCompleted: 4,
     totalModules: 5,
+    adoptionCoachMemberId: null,
+    nextCoachingAt: null,
+    coachingFocus: null,
     joinedAt: "2025-04-01T09:00:00Z",
   },
   {
@@ -41,6 +47,9 @@ export const demoTeamMembers: TeamMember[] = [
     adoptionScore: 76,
     trainingCompleted: 3,
     totalModules: 5,
+    adoptionCoachMemberId: "mem_001",
+    nextCoachingAt: "2026-07-22T14:00:00Z",
+    coachingFocus: "Pair on a live architecture-review workflow and practice challenging unsupported AI findings before approval.",
     joinedAt: "2025-05-12T09:00:00Z",
   },
   {
@@ -55,6 +64,9 @@ export const demoTeamMembers: TeamMember[] = [
     adoptionScore: 71,
     trainingCompleted: 2,
     totalModules: 5,
+    adoptionCoachMemberId: "mem_005",
+    nextCoachingAt: "2026-07-20T15:30:00Z",
+    coachingFocus: "Review unsupported-claim detection in customer responses, then repeat the workflow with source annotations.",
     joinedAt: "2025-06-01T09:00:00Z",
   },
   {
@@ -69,6 +81,9 @@ export const demoTeamMembers: TeamMember[] = [
     adoptionScore: 82,
     trainingCompleted: 5,
     totalModules: 5,
+    adoptionCoachMemberId: null,
+    nextCoachingAt: null,
+    coachingFocus: null,
     joinedAt: "2025-02-01T09:00:00Z",
   },
   {
@@ -83,6 +98,9 @@ export const demoTeamMembers: TeamMember[] = [
     adoptionScore: 45,
     trainingCompleted: 1,
     totalModules: 5,
+    adoptionCoachMemberId: "mem_005",
+    nextCoachingAt: "2026-07-18T16:00:00Z",
+    coachingFocus: "Practice redacting board materials before model use and complete a safe executive-summary walkthrough.",
     joinedAt: "2025-01-10T09:00:00Z",
   },
 ];

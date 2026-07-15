@@ -141,6 +141,32 @@ describe("Team AI Training Hub — demo data integrity", () => {
     expect(gaps.find(({ id }) => id === "mem_006")?.gap).toBeLessThan(0);
   });
 
+  it("assigns accountable peer coaching to every member below their role benchmark", () => {
+    const memberById = new Map(demoTeamMembers.map(member => [member.id, member]));
+    const belowBenchmark = demoTeamMembers.filter(member => member.adoptionScore < member.roleBenchmark);
+
+    expect(belowBenchmark.length).toBeGreaterThan(0);
+
+    for (const member of belowBenchmark) {
+      const coach = member.adoptionCoachMemberId
+        ? memberById.get(member.adoptionCoachMemberId)
+        : undefined;
+
+      expect(coach, `${member.fullName} needs a valid peer coach`).toBeDefined();
+      expect(coach?.id, `${member.fullName} cannot coach themself`).not.toBe(member.id);
+      expect(coach?.adoptionScore, `${member.fullName}'s coach should model target-level adoption`).toBeGreaterThanOrEqual(coach?.roleBenchmark ?? 101);
+      expect(member.nextCoachingAt, `${member.fullName} needs a scheduled coaching session`).toBeTruthy();
+      expect(Number.isNaN(new Date(member.nextCoachingAt ?? "").getTime()), `${member.fullName} has an invalid coaching date`).toBe(false);
+      expect(member.coachingFocus?.trim().length ?? 0, `${member.fullName} needs a concrete coaching focus`).toBeGreaterThan(80);
+    }
+
+    for (const member of demoTeamMembers.filter(member => member.adoptionScore >= member.roleBenchmark)) {
+      expect(member.adoptionCoachMemberId, `${member.fullName} should not be in the coaching queue`).toBeNull();
+      expect(member.nextCoachingAt, `${member.fullName} should not have a coaching deadline`).toBeNull();
+      expect(member.coachingFocus, `${member.fullName} should not have a coaching intervention`).toBeNull();
+    }
+  });
+
   it("training completion counts do not exceed total modules", () => {
     for (const member of demoTeamMembers) {
       expect(member.trainingCompleted).toBeLessThanOrEqual(member.totalModules);

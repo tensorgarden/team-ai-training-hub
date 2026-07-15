@@ -16,6 +16,9 @@ export interface TeamMember {
   adoptionScore: number;
   trainingCompleted: number;
   totalModules: number;
+  adoptionCoachMemberId: string | null;
+  nextCoachingAt: string | null;
+  coachingFocus: string | null;
   joinedAt: string;
 }
 
