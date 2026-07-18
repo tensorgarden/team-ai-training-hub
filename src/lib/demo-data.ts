@@ -16,6 +16,9 @@ export const demoTeamMembers: TeamMember[] = [
     adoptionCoachMemberId: null,
     nextCoachingAt: null,
     coachingFocus: null,
+    managerSupportOwner: null,
+    managerCheckInAt: null,
+    managerSupportAction: null,
     joinedAt: "2025-03-15T09:00:00Z",
   },
   {
@@ -33,6 +36,9 @@ export const demoTeamMembers: TeamMember[] = [
     adoptionCoachMemberId: null,
     nextCoachingAt: null,
     coachingFocus: null,
+    managerSupportOwner: null,
+    managerCheckInAt: null,
+    managerSupportAction: null,
     joinedAt: "2025-04-01T09:00:00Z",
   },
   {
@@ -50,6 +56,9 @@ export const demoTeamMembers: TeamMember[] = [
     adoptionCoachMemberId: "mem_001",
     nextCoachingAt: "2026-07-22T14:00:00Z",
     coachingFocus: "Pair on a live architecture-review workflow and practice challenging unsupported AI findings before approval.",
+    managerSupportOwner: "Nora Patel · VP Engineering",
+    managerCheckInAt: "2026-07-29T14:00:00Z",
+    managerSupportAction: "Protect a weekly architecture-review practice block and remove one low-priority ticket so Priya can apply the workflow with source evidence.",
     joinedAt: "2025-05-12T09:00:00Z",
   },
   {
@@ -67,6 +76,9 @@ export const demoTeamMembers: TeamMember[] = [
     adoptionCoachMemberId: "mem_005",
     nextCoachingAt: "2026-07-20T15:30:00Z",
     coachingFocus: "Review unsupported-claim detection in customer responses, then repeat the workflow with source annotations.",
+    managerSupportOwner: "Amina Brooks · Support Director",
+    managerCheckInAt: "2026-07-27T15:30:00Z",
+    managerSupportAction: "Reserve two ticket-review practice sessions and give James an approved sandbox queue for source-checking responses before live use.",
     joinedAt: "2025-06-01T09:00:00Z",
   },
   {
@@ -84,6 +96,9 @@ export const demoTeamMembers: TeamMember[] = [
     adoptionCoachMemberId: null,
     nextCoachingAt: null,
     coachingFocus: null,
+    managerSupportOwner: null,
+    managerCheckInAt: null,
+    managerSupportAction: null,
     joinedAt: "2025-02-01T09:00:00Z",
   },
   {
@@ -101,6 +116,9 @@ export const demoTeamMembers: TeamMember[] = [
     adoptionCoachMemberId: "mem_005",
     nextCoachingAt: "2026-07-18T16:00:00Z",
     coachingFocus: "Practice redacting board materials before model use and complete a safe executive-summary walkthrough.",
+    managerSupportOwner: "Leah Monroe · Chief Operating Officer",
+    managerCheckInAt: "2026-07-24T16:00:00Z",
+    managerSupportAction: "Move the board-summary workflow into the approved workspace and review David's redaction checklist before the next executive briefing.",
     joinedAt: "2025-01-10T09:00:00Z",
   },
 ];

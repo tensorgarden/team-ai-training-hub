@@ -19,6 +19,9 @@ export interface TeamMember {
   adoptionCoachMemberId: string | null;
   nextCoachingAt: string | null;
   coachingFocus: string | null;
+  managerSupportOwner: string | null;
+  managerCheckInAt: string | null;
+  managerSupportAction: string | null;
   joinedAt: string;
 }
 

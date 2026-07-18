@@ -167,6 +167,27 @@ describe("Team AI Training Hub — demo data integrity", () => {
     }
   });
 
+  it("pairs below-benchmark coaching with concrete manager support", () => {
+    const belowBenchmark = demoTeamMembers.filter(member => member.adoptionScore < member.roleBenchmark);
+
+    for (const member of belowBenchmark) {
+      expect(member.managerSupportOwner?.trim().length ?? 0, `${member.fullName} needs a named manager sponsor`).toBeGreaterThan(5);
+      expect(member.managerCheckInAt, `${member.fullName} needs a manager follow-up`).toBeTruthy();
+      expect(member.managerSupportAction?.trim().length ?? 0, `${member.fullName} needs a concrete manager action`).toBeGreaterThan(80);
+      expect(member.managerSupportAction?.toLowerCase() ?? "", `${member.fullName} support must connect to daily work`).toMatch(/workflow|practice|review|sandbox/);
+
+      const coachingTime = new Date(member.nextCoachingAt ?? "").getTime();
+      const checkInTime = new Date(member.managerCheckInAt ?? "").getTime();
+      expect(checkInTime, `${member.fullName} manager follow-up should happen after peer coaching`).toBeGreaterThan(coachingTime);
+    }
+
+    for (const member of demoTeamMembers.filter(member => member.adoptionScore >= member.roleBenchmark)) {
+      expect(member.managerSupportOwner, `${member.fullName} should not need a manager intervention`).toBeNull();
+      expect(member.managerCheckInAt, `${member.fullName} should not have a manager follow-up`).toBeNull();
+      expect(member.managerSupportAction, `${member.fullName} should not have a manager support action`).toBeNull();
+    }
+  });
+
   it("training completion counts do not exceed total modules", () => {
     for (const member of demoTeamMembers) {
       expect(member.trainingCompleted).toBeLessThanOrEqual(member.totalModules);

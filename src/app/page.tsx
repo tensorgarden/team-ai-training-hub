@@ -116,6 +116,9 @@ function AdoptionRow({ member }: { member: TeamMember }) {
   const coachingDate = member.nextCoachingAt
     ? new Date(member.nextCoachingAt).toLocaleDateString("en-US", { month: "short", day: "numeric" })
     : null;
+  const managerCheckInDate = member.managerCheckInAt
+    ? new Date(member.managerCheckInAt).toLocaleDateString("en-US", { month: "short", day: "numeric" })
+    : null;
   return (
     <div className="flex items-center gap-4 py-3 border-b border-slate-100 last:border-b-0">
       <div className="flex items-center justify-center h-10 w-10 rounded-full bg-indigo-100 text-indigo-700 font-bold text-sm flex-shrink-0">
@@ -141,6 +144,12 @@ function AdoptionRow({ member }: { member: TeamMember }) {
           <div className="mt-2 rounded-lg bg-amber-50 px-2.5 py-2 text-xs leading-5 text-amber-900">
             <span className="font-semibold">Peer coaching:</span> {adoptionCoach.fullName} · {coachingDate}<br />
             <span className="text-amber-800">{member.coachingFocus}</span>
+          </div>
+        )}
+        {member.managerSupportOwner && managerCheckInDate && member.managerSupportAction && (
+          <div className="mt-2 rounded-lg bg-indigo-50 px-2.5 py-2 text-xs leading-5 text-indigo-900">
+            <span className="font-semibold">Manager follow-through:</span> {member.managerSupportOwner} · {managerCheckInDate}<br />
+            <span className="text-indigo-800">{member.managerSupportAction}</span>
           </div>
         )}
       </div>
