@@ -22,6 +22,9 @@ export interface TeamMember {
   managerSupportOwner: string | null;
   managerCheckInAt: string | null;
   managerSupportAction: string | null;
+  workflowTransferReviewer: string | null;
+  workflowTransferReviewAt: string | null;
+  workflowTransferSuccessCriteria: string | null;
   joinedAt: string;
 }
 

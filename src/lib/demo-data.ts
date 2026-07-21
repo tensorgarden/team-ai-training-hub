@@ -19,6 +19,9 @@ export const demoTeamMembers: TeamMember[] = [
     managerSupportOwner: null,
     managerCheckInAt: null,
     managerSupportAction: null,
+    workflowTransferReviewer: null,
+    workflowTransferReviewAt: null,
+    workflowTransferSuccessCriteria: null,
     joinedAt: "2025-03-15T09:00:00Z",
   },
   {
@@ -39,6 +42,9 @@ export const demoTeamMembers: TeamMember[] = [
     managerSupportOwner: null,
     managerCheckInAt: null,
     managerSupportAction: null,
+    workflowTransferReviewer: null,
+    workflowTransferReviewAt: null,
+    workflowTransferSuccessCriteria: null,
     joinedAt: "2025-04-01T09:00:00Z",
   },
   {
@@ -59,6 +65,9 @@ export const demoTeamMembers: TeamMember[] = [
     managerSupportOwner: "Nora Patel · VP Engineering",
     managerCheckInAt: "2026-07-29T14:00:00Z",
     managerSupportAction: "Protect a weekly architecture-review practice block and remove one low-priority ticket so Priya can apply the workflow with source evidence.",
+    workflowTransferReviewer: "Owen Hart · Engineering Enablement Lead",
+    workflowTransferReviewAt: "2026-08-05T14:00:00Z",
+    workflowTransferSuccessCriteria: "Validate that Priya independently completes one architecture-review workflow with source anchors, documented challenges to unsupported findings, and the required human approval handoff.",
     joinedAt: "2025-05-12T09:00:00Z",
   },
   {
@@ -79,6 +88,9 @@ export const demoTeamMembers: TeamMember[] = [
     managerSupportOwner: "Amina Brooks · Support Director",
     managerCheckInAt: "2026-07-27T15:30:00Z",
     managerSupportAction: "Reserve two ticket-review practice sessions and give James an approved sandbox queue for source-checking responses before live use.",
+    workflowTransferReviewer: "Maya Singh · Support Quality Lead",
+    workflowTransferReviewAt: "2026-08-03T15:30:00Z",
+    workflowTransferSuccessCriteria: "Observe James complete three live ticket-response workflows with source annotations and no unsupported claims, then record the quality review outcome.",
     joinedAt: "2025-06-01T09:00:00Z",
   },
   {
@@ -99,6 +111,9 @@ export const demoTeamMembers: TeamMember[] = [
     managerSupportOwner: null,
     managerCheckInAt: null,
     managerSupportAction: null,
+    workflowTransferReviewer: null,
+    workflowTransferReviewAt: null,
+    workflowTransferSuccessCriteria: null,
     joinedAt: "2025-02-01T09:00:00Z",
   },
   {
@@ -119,6 +134,9 @@ export const demoTeamMembers: TeamMember[] = [
     managerSupportOwner: "Leah Monroe · Chief Operating Officer",
     managerCheckInAt: "2026-07-24T16:00:00Z",
     managerSupportAction: "Move the board-summary workflow into the approved workspace and review David's redaction checklist before the next executive briefing.",
+    workflowTransferReviewer: "Elena Torres · People Operations",
+    workflowTransferReviewAt: "2026-07-31T16:00:00Z",
+    workflowTransferSuccessCriteria: "Confirm David prepares one board-summary workflow inside the approved workspace, applies the redaction checklist, and passes the human safety review before briefing use.",
     joinedAt: "2025-01-10T09:00:00Z",
   },
 ];

@@ -119,6 +119,9 @@ function AdoptionRow({ member }: { member: TeamMember }) {
   const managerCheckInDate = member.managerCheckInAt
     ? new Date(member.managerCheckInAt).toLocaleDateString("en-US", { month: "short", day: "numeric" })
     : null;
+  const workflowTransferReviewDate = member.workflowTransferReviewAt
+    ? new Date(member.workflowTransferReviewAt).toLocaleDateString("en-US", { month: "short", day: "numeric" })
+    : null;
   return (
     <div className="flex items-center gap-4 py-3 border-b border-slate-100 last:border-b-0">
       <div className="flex items-center justify-center h-10 w-10 rounded-full bg-indigo-100 text-indigo-700 font-bold text-sm flex-shrink-0">
@@ -150,6 +153,12 @@ function AdoptionRow({ member }: { member: TeamMember }) {
           <div className="mt-2 rounded-lg bg-indigo-50 px-2.5 py-2 text-xs leading-5 text-indigo-900">
             <span className="font-semibold">Manager follow-through:</span> {member.managerSupportOwner} · {managerCheckInDate}<br />
             <span className="text-indigo-800">{member.managerSupportAction}</span>
+          </div>
+        )}
+        {member.workflowTransferReviewer && workflowTransferReviewDate && member.workflowTransferSuccessCriteria && (
+          <div className="mt-2 rounded-lg bg-emerald-50 px-2.5 py-2 text-xs leading-5 text-emerald-900">
+            <span className="font-semibold">Workflow transfer check:</span> {member.workflowTransferReviewer} · {workflowTransferReviewDate}<br />
+            <span className="text-emerald-800">{member.workflowTransferSuccessCriteria}</span>
           </div>
         )}
       </div>

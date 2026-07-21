@@ -188,6 +188,27 @@ describe("Team AI Training Hub — demo data integrity", () => {
     }
   });
 
+  it("schedules evidence-based workflow transfer validation after manager support", () => {
+    const belowBenchmark = demoTeamMembers.filter(member => member.adoptionScore < member.roleBenchmark);
+
+    for (const member of belowBenchmark) {
+      expect(member.workflowTransferReviewer?.trim().length ?? 0, `${member.fullName} needs a named transfer reviewer`).toBeGreaterThan(5);
+      expect(member.workflowTransferReviewAt, `${member.fullName} needs a workflow transfer review`).toBeTruthy();
+      expect(member.workflowTransferSuccessCriteria?.trim().length ?? 0, `${member.fullName} needs observable transfer criteria`).toBeGreaterThan(100);
+      expect(member.workflowTransferSuccessCriteria?.toLowerCase() ?? "", `${member.fullName} transfer criteria must test work, not attendance`).toMatch(/workflow/);
+
+      const managerCheckInTime = new Date(member.managerCheckInAt ?? "").getTime();
+      const transferReviewTime = new Date(member.workflowTransferReviewAt ?? "").getTime();
+      expect(transferReviewTime, `${member.fullName} transfer review should follow manager support`).toBeGreaterThan(managerCheckInTime);
+    }
+
+    for (const member of demoTeamMembers.filter(member => member.adoptionScore >= member.roleBenchmark)) {
+      expect(member.workflowTransferReviewer, `${member.fullName} should not need transfer review`).toBeNull();
+      expect(member.workflowTransferReviewAt, `${member.fullName} should not have a transfer-review deadline`).toBeNull();
+      expect(member.workflowTransferSuccessCriteria, `${member.fullName} should not have transfer-review criteria`).toBeNull();
+    }
+  });
+
   it("training completion counts do not exceed total modules", () => {
     for (const member of demoTeamMembers) {
       expect(member.trainingCompleted).toBeLessThanOrEqual(member.totalModules);
