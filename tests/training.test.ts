@@ -259,6 +259,14 @@ describe("Team AI Training Hub — demo data integrity", () => {
     }
   });
 
+  it("builds critical-thinking checkpoints into every training module", () => {
+    for (const tm of demoTrainingModules) {
+      expect(tm.criticalThinkingCheckpoint.trim().length, `${tm.id} needs a substantial reliance check`).toBeGreaterThan(100);
+      expect(tm.criticalThinkingCheckpoint.toLowerCase(), `${tm.id} must require verification or challenge`).toMatch(/verify|challenge|evidence/);
+      expect(tm.criticalThinkingCheckpoint.toLowerCase(), `${tm.id} must define when not to trust the output`).toMatch(/reject|not be trusted|unsupported|escalate|approval/);
+    }
+  });
+
   it("adoption velocity shows positive week-over-week and month-over-month growth", () => {
     expect(demoAdoptionMetrics.previousWeekPrompts).toBeGreaterThan(0);
     expect(demoAdoptionMetrics.previousMonthPrompts).toBeGreaterThan(0);

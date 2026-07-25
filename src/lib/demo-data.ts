@@ -256,6 +256,7 @@ export const demoTrainingModules: TrainingModule[] = [
     capabilityOutcome: "Learner can turn a real workflow need into a reusable prompt without leaking confidential context.",
     reinforcementCadenceDays: 21,
     reinforcementActivity: "Repeat the status-update lab with a new team artifact and peer-review the prompt for confidential context before reuse.",
+    criticalThinkingCheckpoint: "Name one assumption in the AI draft, verify its most consequential claim against the source artifact, and record what evidence would make you reject the output.",
   },
   {
     id: "tm_002",
@@ -272,6 +273,7 @@ export const demoTrainingModules: TrainingModule[] = [
     capabilityOutcome: "Learner can evaluate accuracy, assumptions, and decision-readiness instead of only producing more content.",
     reinforcementCadenceDays: 30,
     reinforcementActivity: "Re-run the comparison exercise on a current report, document unsupported claims, and have a reviewer challenge the chosen output.",
+    criticalThinkingCheckpoint: "State what could make the selected variant wrong, verify two decision-critical claims against source evidence, and explain why the rejected variants should not be trusted.",
   },
   {
     id: "tm_003",
@@ -288,6 +290,7 @@ export const demoTrainingModules: TrainingModule[] = [
     capabilityOutcome: "Learner can use long-context review for engineering judgment while preserving human approval gates.",
     reinforcementCadenceDays: 30,
     reinforcementActivity: "Audit a fresh architecture brief for source-grounded risks and repeat the human-approval handoff with an engineering peer.",
+    criticalThinkingCheckpoint: "Separate AI-generated hypotheses from source-backed architecture risks, challenge one plausible but unsupported finding, and document the evidence required for approval.",
   },
   {
     id: "tm_004",
@@ -304,6 +307,7 @@ export const demoTrainingModules: TrainingModule[] = [
     capabilityOutcome: "Learner can apply AI to role-specific outreach while keeping brand, compliance, and factual-review checks visible.",
     reinforcementCadenceDays: 21,
     reinforcementActivity: "Retake the outreach exercise with a new account and require a peer to verify every external claim before the sequence is approved.",
+    criticalThinkingCheckpoint: "Verify each external claim against an approved source, identify one assumption the model made about the prospect, and reject copy whose evidence cannot be traced.",
   },
   {
     id: "tm_005",
@@ -320,6 +324,7 @@ export const demoTrainingModules: TrainingModule[] = [
     capabilityOutcome: "Learner can spot PII, proprietary data, bias risk, and cases where AI should not be used.",
     reinforcementCadenceDays: 14,
     reinforcementActivity: "Review a rotating set of policy-edge prompts, record the safe handling decision, and escalate one ambiguous case for discussion.",
+    criticalThinkingCheckpoint: "Explain which evidence supports the handling decision, challenge the model recommendation in one ambiguous case, and escalate rather than accept an unsafe shortcut.",
   },
 ];
 
