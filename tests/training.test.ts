@@ -267,6 +267,17 @@ describe("Team AI Training Hub — demo data integrity", () => {
     }
   });
 
+  it("requires an independent judgment before learners see AI advice", () => {
+    for (const tm of demoTrainingModules) {
+      const drill = tm.independentJudgmentDrill.toLowerCase();
+
+      expect(tm.independentJudgmentDrill.trim().length, `${tm.id} needs a substantial human-first drill`).toBeGreaterThan(130);
+      expect(drill, `${tm.id} must capture a decision before AI advice`).toMatch(/before (viewing|opening|seeing)|without ai/);
+      expect(drill, `${tm.id} must compare human and AI judgments`).toMatch(/compare/);
+      expect(drill, `${tm.id} must require an evidence-based final decision`).toMatch(/revise|reject|kept|unchanged|escalate/);
+    }
+  });
+
   it("adoption velocity shows positive week-over-week and month-over-month growth", () => {
     expect(demoAdoptionMetrics.previousWeekPrompts).toBeGreaterThan(0);
     expect(demoAdoptionMetrics.previousMonthPrompts).toBeGreaterThan(0);

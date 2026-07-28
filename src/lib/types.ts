@@ -57,6 +57,7 @@ export interface TrainingModule {
   reinforcementCadenceDays: number;
   reinforcementActivity: string;
   criticalThinkingCheckpoint: string;
+  independentJudgmentDrill: string;
 }
 
 export type CapabilityCheckStatus = "pending" | "passed" | "needs_review";
