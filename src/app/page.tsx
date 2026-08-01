@@ -287,6 +287,7 @@ function TrainingModuleCard({ module }: { module: TrainingModule }) {
         <p><span className="font-semibold text-indigo-700">Reinforce every {module.reinforcementCadenceDays} days:</span> {module.reinforcementActivity}</p>
         <p><span className="font-semibold text-indigo-700">Critical-thinking checkpoint:</span> {module.criticalThinkingCheckpoint}</p>
         <p><span className="font-semibold text-indigo-700">Independent-judgment drill:</span> {module.independentJudgmentDrill}</p>
+        <p><span className="font-semibold text-indigo-700">Reasoning ownership reflection:</span> {module.reasoningOwnershipReflection}</p>
       </div>
       <ProgressBar value={module.completionRate} color={statusColor} />
       <div className="flex justify-between mt-2 text-xs text-slate-400">

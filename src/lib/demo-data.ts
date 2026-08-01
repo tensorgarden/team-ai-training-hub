@@ -258,6 +258,7 @@ export const demoTrainingModules: TrainingModule[] = [
     reinforcementActivity: "Repeat the status-update lab with a new team artifact and peer-review the prompt for confidential context before reuse.",
     criticalThinkingCheckpoint: "Name one assumption in the AI draft, verify its most consequential claim against the source artifact, and record what evidence would make you reject the output.",
     independentJudgmentDrill: "Draft the status-update decision and supporting rationale without AI; only then reveal the model rewrite, compare each changed claim, and keep or revise the original judgment with source evidence.",
+    reasoningOwnershipReflection: "After the comparison, rate your confidence in the final status decision, name which reasoning remains yours, and record whether AI saved time without replacing the deeper source review.",
   },
   {
     id: "tm_002",
@@ -276,6 +277,7 @@ export const demoTrainingModules: TrainingModule[] = [
     reinforcementActivity: "Re-run the comparison exercise on a current report, document unsupported claims, and have a reviewer challenge the chosen output.",
     criticalThinkingCheckpoint: "State what could make the selected variant wrong, verify two decision-critical claims against source evidence, and explain why the rejected variants should not be trusted.",
     independentJudgmentDrill: "Score the operations report independently before viewing any AI ranking; then compare the recommendation, revise only where source evidence warrants it, and explain every unchanged decision.",
+    reasoningOwnershipReflection: "After choosing a variant, rate confidence in the decision, identify the analysis you still own, and document whether faster generation reduced the depth of evidence review.",
   },
   {
     id: "tm_003",
@@ -294,6 +296,7 @@ export const demoTrainingModules: TrainingModule[] = [
     reinforcementActivity: "Audit a fresh architecture brief for source-grounded risks and repeat the human-approval handoff with an engineering peer.",
     criticalThinkingCheckpoint: "Separate AI-generated hypotheses from source-backed architecture risks, challenge one plausible but unsupported finding, and document the evidence required for approval.",
     independentJudgmentDrill: "Record an architecture risk assessment before opening Claude; then compare its findings with the human baseline, revise only source-supported judgments, and flag any AI-led change for peer review.",
+    reasoningOwnershipReflection: "After the architecture review, state which risk judgments remain yours, rate confidence after challenging Claude, and record any speed-versus-depth trade-off that needs peer review.",
   },
   {
     id: "tm_004",
@@ -312,6 +315,7 @@ export const demoTrainingModules: TrainingModule[] = [
     reinforcementActivity: "Retake the outreach exercise with a new account and require a peer to verify every external claim before the sequence is approved.",
     criticalThinkingCheckpoint: "Verify each external claim against an approved source, identify one assumption the model made about the prospect, and reject copy whose evidence cannot be traced.",
     independentJudgmentDrill: "Select and substantiate the outreach claims without AI before viewing the generated sequence; then compare differences, reject unsupported changes, and document why each human judgment was kept or revised.",
+    reasoningOwnershipReflection: "Before approval, name the outreach claims you personally own, rate confidence after rejecting unsupported copy, and record whether AI speed reduced research or review depth.",
   },
   {
     id: "tm_005",
@@ -330,6 +334,7 @@ export const demoTrainingModules: TrainingModule[] = [
     reinforcementActivity: "Review a rotating set of policy-edge prompts, record the safe handling decision, and escalate one ambiguous case for discussion.",
     criticalThinkingCheckpoint: "Explain which evidence supports the handling decision, challenge the model recommendation in one ambiguous case, and escalate rather than accept an unsafe shortcut.",
     independentJudgmentDrill: "Classify each data-handling case without AI before seeing the model recommendation; then compare outcomes, revise only against policy evidence, and escalate any unresolved disagreement.",
+    reasoningOwnershipReflection: "After resolving the case, state which safety judgment remains yours, rate confidence after challenging the model, and record whether speed pressure displaced policy review depth.",
   },
 ];
 

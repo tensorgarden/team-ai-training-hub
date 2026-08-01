@@ -58,6 +58,7 @@ export interface TrainingModule {
   reinforcementActivity: string;
   criticalThinkingCheckpoint: string;
   independentJudgmentDrill: string;
+  reasoningOwnershipReflection: string;
 }
 
 export type CapabilityCheckStatus = "pending" | "passed" | "needs_review";

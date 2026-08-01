@@ -278,6 +278,18 @@ describe("Team AI Training Hub — demo data integrity", () => {
     }
   });
 
+  it("makes learners reflect on confidence and ownership after AI-assisted work", () => {
+    for (const tm of demoTrainingModules) {
+      const reflection = tm.reasoningOwnershipReflection.toLowerCase();
+
+      expect(tm.reasoningOwnershipReflection.trim().length, `${tm.id} needs a substantial ownership reflection`).toBeGreaterThan(130);
+      expect(reflection, `${tm.id} must preserve accountable human reasoning`).toMatch(/reasoning remains yours|analysis you still own|judgments remain yours|claims you personally own|judgment remains yours/);
+      expect(reflection, `${tm.id} must make confidence observable`).toMatch(/rate (your )?confidence/);
+      expect(reflection, `${tm.id} must expose speed-versus-depth trade-offs`).toMatch(/speed|faster generation|saved time/);
+      expect(reflection, `${tm.id} must protect depth of thought or review`).toMatch(/depth|deeper source review/);
+    }
+  });
+
   it("adoption velocity shows positive week-over-week and month-over-month growth", () => {
     expect(demoAdoptionMetrics.previousWeekPrompts).toBeGreaterThan(0);
     expect(demoAdoptionMetrics.previousMonthPrompts).toBeGreaterThan(0);
