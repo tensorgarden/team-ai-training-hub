@@ -109,6 +109,23 @@ export interface PrePostTrainingBenchmark {
   relatedModuleIds: string[];
 }
 
+export type ShadowAiAssessmentStatus = "unassessed" | "approved_alternative_offered" | "approved" | "blocked";
+export type ShadowAiDataSensitivity = "low" | "moderate" | "high";
+
+export interface ShadowAiToolSignal {
+  id: string;
+  memberId: string;
+  toolName: string;
+  detectedAt: string;
+  observedUse: string;
+  dataSensitivity: ShadowAiDataSensitivity;
+  assessmentStatus: ShadowAiAssessmentStatus;
+  reviewerMemberId: string;
+  reviewDueAt: string;
+  approvedAlternativeTool: string | null;
+  haltProcedureBriefed: boolean;
+}
+
 export interface AdoptionMetrics {
   totalTeamMembers: number;
   activeUsers: number;

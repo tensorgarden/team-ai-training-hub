@@ -1,5 +1,5 @@
-import { demoTeamMembers, demoPromptTemplates, demoTrainingModules, demoUsageLogs, demoAdoptionMetrics, demoPrePostBenchmarks, demoCapabilityChecks } from "@/lib/demo-data";
-import type { TeamMember, PromptTemplate, TrainingModule, UsageLog, PrePostTrainingBenchmark, CapabilityCheck } from "@/lib/types";
+import { demoTeamMembers, demoPromptTemplates, demoTrainingModules, demoUsageLogs, demoAdoptionMetrics, demoPrePostBenchmarks, demoCapabilityChecks, demoShadowAiSignals } from "@/lib/demo-data";
+import type { TeamMember, PromptTemplate, TrainingModule, UsageLog, PrePostTrainingBenchmark, CapabilityCheck, ShadowAiToolSignal } from "@/lib/types";
 
 // --- Reusable components ---
 
@@ -268,6 +268,66 @@ function ReadinessReviewQueue() {
   );
 }
 
+function ShadowAiSignalRow({ signal }: { signal: ShadowAiToolSignal }) {
+  const member = findMember(signal.memberId);
+  const reviewer = findMember(signal.reviewerMemberId);
+  const dueLabel = new Date(signal.reviewDueAt).toLocaleDateString("en-US", { month: "short", day: "numeric" });
+  const statusTone = signal.assessmentStatus === "approved" ? "green"
+    : signal.assessmentStatus === "blocked" ? "red"
+    : signal.assessmentStatus === "approved_alternative_offered" ? "blue"
+    : "amber";
+  const statusLabel = signal.assessmentStatus === "approved_alternative_offered" ? "alternative offered" : signal.assessmentStatus.replace("_", " ");
+  const sensitivityTone = signal.dataSensitivity === "high" ? "text-red-600" : signal.dataSensitivity === "moderate" ? "text-amber-600" : "text-slate-500";
+
+  return (
+    <div className="rounded-2xl border border-slate-100 bg-white/90 p-4 text-sm shadow-sm">
+      <div className="flex items-start justify-between gap-3">
+        <div>
+          <h3 className="font-bold text-slate-900">{signal.toolName}</h3>
+          <p className="mt-0.5 text-xs text-slate-500">
+            {member?.fullName || signal.memberId} · <span className={`font-semibold ${sensitivityTone}`}>{signal.dataSensitivity} sensitivity</span> · review by {reviewer?.fullName || signal.reviewerMemberId} · due {dueLabel}
+          </p>
+        </div>
+        <Badge tone={statusTone}>{statusLabel}</Badge>
+      </div>
+      <p className="mt-2 text-xs leading-5 text-slate-600">{signal.observedUse}</p>
+      {signal.approvedAlternativeTool ? (
+        <p className="mt-2 rounded-xl bg-blue-50 p-2 text-xs leading-5 text-blue-800">
+          <span className="font-semibold">Approved alternative:</span> {signal.approvedAlternativeTool}
+        </p>
+      ) : (
+        <p className="mt-2 rounded-xl bg-amber-50 p-2 text-xs leading-5 text-amber-800">
+          Pending assessment — not approved for continued use and not yet redirected to an approved workspace.
+        </p>
+      )}
+      {signal.dataSensitivity === "high" && (
+        <p className={`mt-2 text-xs font-semibold ${signal.haltProcedureBriefed ? "text-emerald-600" : "text-red-600"}`}>
+          {signal.haltProcedureBriefed ? "Halt procedure briefed" : "Halt procedure briefing required before action"}
+        </p>
+      )}
+    </div>
+  );
+}
+
+function ShadowAiSignals() {
+  const pendingCount = demoShadowAiSignals.filter(signal => signal.assessmentStatus === "unassessed").length;
+
+  return (
+    <Card>
+      <div className="mb-4 flex items-center justify-between">
+        <h2 className="text-lg font-bold text-slate-900">Shadow AI Signals</h2>
+        <Badge tone="amber">{pendingCount} pending</Badge>
+      </div>
+      <p className="mb-4 text-sm text-slate-500">
+        Detected unsanctioned tools are routed to a named reviewer with a near-term deadline, then redirected to an approved alternative instead of silently banned or ignored.
+      </p>
+      <div className="space-y-3">
+        {demoShadowAiSignals.map(signal => <ShadowAiSignalRow key={signal.id} signal={signal} />)}
+      </div>
+    </Card>
+  );
+}
+
 // --- Training modules ---
 
 function TrainingModuleCard({ module }: { module: TrainingModule }) {
@@ -426,6 +486,7 @@ export default function Home() {
         <div className="space-y-6">
           <TeamAdoption />
           <ReadinessReviewQueue />
+          <ShadowAiSignals />
           <BusinessImpactBenchmarks />
           <TeamLeaderboard />
         </div>

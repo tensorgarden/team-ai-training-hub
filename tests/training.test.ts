@@ -6,7 +6,8 @@ import {
   demoUsageLogs,
   demoCapabilityChecks,
   demoAdoptionMetrics,
-  demoPrePostBenchmarks
+  demoPrePostBenchmarks,
+  demoShadowAiSignals
 } from "@/lib/demo-data";
 
 describe("Team AI Training Hub — demo data integrity", () => {
@@ -394,6 +395,63 @@ describe("Team AI Training Hub — post-training capability checks", () => {
   it("every capability check scenario describes a task the learner performed independently", () => {
     for (const cc of demoCapabilityChecks) {
       expect(cc.scenario.trim().length, `${cc.id} scenario is too short`).toBeGreaterThan(60);
+    }
+  });
+});
+
+describe("Team AI Training Hub — shadow AI signal governance", () => {
+  const memberIds = new Set(demoTeamMembers.map(m => m.id));
+
+  it("routes every detected unsanctioned tool to a named independent reviewer with a near-term deadline", () => {
+    expect(demoShadowAiSignals.length).toBeGreaterThanOrEqual(3);
+
+    for (const signal of demoShadowAiSignals) {
+      expect(memberIds.has(signal.memberId), `${signal.id} references unknown member ${signal.memberId}`).toBe(true);
+      expect(memberIds.has(signal.reviewerMemberId), `${signal.id} has unknown reviewer ${signal.reviewerMemberId}`).toBe(true);
+      expect(signal.reviewerMemberId, `${signal.id} reviewer must be independent of the reporter`).not.toBe(signal.memberId);
+      expect(signal.toolName.trim().length, `${signal.id} needs a tool name`).toBeGreaterThan(3);
+      expect(signal.observedUse.trim().length, `${signal.id} needs a concrete observed-use description`).toBeGreaterThan(60);
+
+      const detectedTime = new Date(signal.detectedAt).getTime();
+      const dueTime = new Date(signal.reviewDueAt).getTime();
+      const daysToReview = (dueTime - detectedTime) / (1000 * 60 * 60 * 24);
+
+      expect(Number.isNaN(detectedTime), `${signal.id} has an invalid detection date`).toBe(false);
+      expect(dueTime, `${signal.id} review deadline must follow detection`).toBeGreaterThan(detectedTime);
+      expect(daysToReview, `${signal.id} review deadline is not near-term`).toBeLessThanOrEqual(14);
+    }
+  });
+
+  it("never treats an unassessed tool as approved or routes it without review", () => {
+    const unassessed = demoShadowAiSignals.filter(signal => signal.assessmentStatus === "unassessed");
+    expect(unassessed.length, "fixture must include a pending assessment so the review queue is not vacuous").toBeGreaterThan(0);
+
+    for (const signal of unassessed) {
+      expect(signal.approvedAlternativeTool, `${signal.id} cannot name an approved alternative before assessment`).toBeNull();
+      expect(signal.reviewDueAt, `${signal.id} must stay visibly routed to review`).toBeTruthy();
+    }
+  });
+
+  it("names an approved alternative before redirecting staff away from an unsanctioned tool", () => {
+    const redirected = demoShadowAiSignals.filter(
+      signal => signal.assessmentStatus === "approved_alternative_offered" || signal.assessmentStatus === "approved"
+    );
+    expect(redirected.length, "fixture must include a redirected signal so the alternative path is not vacuous").toBeGreaterThan(0);
+
+    for (const signal of redirected) {
+      expect(signal.approvedAlternativeTool?.trim().length ?? 0, `${signal.id} needs a named approved alternative`).toBeGreaterThan(20);
+      expect(signal.approvedAlternativeTool?.toLowerCase() ?? "", `${signal.id} alternative must be an approved workspace, not a ban`).toContain("approved");
+    }
+  });
+
+  it("briefs the halt procedure before acting on high-sensitivity shadow AI signals", () => {
+    const highSensitivityActedOn = demoShadowAiSignals.filter(
+      signal => signal.dataSensitivity === "high" && signal.assessmentStatus !== "unassessed"
+    );
+    expect(highSensitivityActedOn.length, "fixture must include an acted-on high-sensitivity signal").toBeGreaterThan(0);
+
+    for (const signal of highSensitivityActedOn) {
+      expect(signal.haltProcedureBriefed, `${signal.id} cannot be acted on until staff know how to halt the tool mid-incident`).toBe(true);
     }
   });
 });

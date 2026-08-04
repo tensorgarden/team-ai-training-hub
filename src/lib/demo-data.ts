@@ -1,4 +1,4 @@
-import type { CapabilityCheck, TeamMember, PromptTemplate, TrainingModule, AdoptionMetrics, UsageLog, PrePostTrainingBenchmark } from "./types";
+import type { CapabilityCheck, TeamMember, PromptTemplate, TrainingModule, AdoptionMetrics, UsageLog, PrePostTrainingBenchmark, ShadowAiToolSignal } from "./types";
 
 export const demoTeamMembers: TeamMember[] = [
   {
@@ -421,6 +421,48 @@ export const demoPrePostBenchmarks: PrePostTrainingBenchmark[] = [
     measuredAfter: "2026-06-18T09:00:00Z",
     ownerMemberId: "mem_001",
     relatedModuleIds: ["tm_002", "tm_005"],
+  },
+];
+
+export const demoShadowAiSignals: ShadowAiToolSignal[] = [
+  {
+    id: "sa_001",
+    memberId: "mem_006",
+    toolName: "Consumer transcription app",
+    detectedAt: "2026-07-28T09:15:00Z",
+    observedUse: "Uploaded a confidential board-meeting recording to a personal transcription account to get a summary before the executive briefing.",
+    dataSensitivity: "high",
+    assessmentStatus: "unassessed",
+    reviewerMemberId: "mem_005",
+    reviewDueAt: "2026-08-06T17:00:00Z",
+    approvedAlternativeTool: null,
+    haltProcedureBriefed: false,
+  },
+  {
+    id: "sa_002",
+    memberId: "mem_004",
+    toolName: "Free web PDF summarizer",
+    detectedAt: "2026-07-21T14:40:00Z",
+    observedUse: "Pasted an enterprise customer ticket thread with account details into a free web summarizer during a support queue spike.",
+    dataSensitivity: "moderate",
+    assessmentStatus: "approved_alternative_offered",
+    reviewerMemberId: "mem_005",
+    reviewDueAt: "2026-08-01T17:00:00Z",
+    approvedAlternativeTool: "Approved workspace summarizer with the ticket-redaction prompt template",
+    haltProcedureBriefed: false,
+  },
+  {
+    id: "sa_003",
+    memberId: "mem_002",
+    toolName: "Unreviewed AI email browser extension",
+    detectedAt: "2026-07-14T10:05:00Z",
+    observedUse: "Installed an unreviewed AI email-drafting extension that can read CRM reply threads to autocomplete prospect responses.",
+    dataSensitivity: "high",
+    assessmentStatus: "approved_alternative_offered",
+    reviewerMemberId: "mem_005",
+    reviewDueAt: "2026-07-24T17:00:00Z",
+    approvedAlternativeTool: "Approved sales-drafting workspace with CRM data isolation",
+    haltProcedureBriefed: true,
   },
 ];
 
