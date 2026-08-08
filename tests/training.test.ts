@@ -454,4 +454,18 @@ describe("Team AI Training Hub — shadow AI signal governance", () => {
       expect(signal.haltProcedureBriefed, `${signal.id} cannot be acted on until staff know how to halt the tool mid-incident`).toBe(true);
     }
   });
+
+  it("tracks adoption velocity (week-over-week) to measure capability liquidity", () => {
+    expect(demoAdoptionMetrics.adoptionVelocityWoW, "adoption velocity must be a measurable percentage change").toBeGreaterThan(0);
+    expect(demoAdoptionMetrics.adoptionVelocityWoW, "adoption velocity should be realistic (not exceeding 50% WoW)").toBeLessThan(50);
+    expect(["accelerating", "stable", "declining"]).toContain(demoAdoptionMetrics.adoptionVelocityDirection);
+  });
+
+  it("measures members meeting or exceeding role benchmarks to assess capability alignment", () => {
+    expect(demoAdoptionMetrics.memberCountAboveRoleBenchmark, "at least some members should meet role benchmarks").toBeGreaterThan(0);
+    expect(demoAdoptionMetrics.memberCountAboveRoleBenchmark, "member count must not exceed total team size").toBeLessThanOrEqual(demoAdoptionMetrics.totalTeamMembers);
+
+    const actualCountAboveBenchmark = demoTeamMembers.filter(member => member.adoptionScore >= member.roleBenchmark).length;
+    expect(demoAdoptionMetrics.memberCountAboveRoleBenchmark, "metric count must match actual data").toBe(actualCountAboveBenchmark);
+  });
 });

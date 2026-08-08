@@ -482,4 +482,7 @@ export const demoAdoptionMetrics: AdoptionMetrics = {
   averageRating: 4.5,
   totalCapabilityChecksPassed: 8,
   totalCapabilityChecks: 15,
+  adoptionVelocityWoW: 19,
+  adoptionVelocityDirection: "accelerating",
+  memberCountAboveRoleBenchmark: 3,
 };

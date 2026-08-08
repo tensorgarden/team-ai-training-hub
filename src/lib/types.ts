@@ -142,4 +142,7 @@ export interface AdoptionMetrics {
   averageRating: number;
   totalCapabilityChecksPassed: number;
   totalCapabilityChecks: number;
+  adoptionVelocityWoW: number;
+  adoptionVelocityDirection: "accelerating" | "stable" | "declining";
+  memberCountAboveRoleBenchmark: number;
 }
