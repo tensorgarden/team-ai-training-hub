@@ -305,6 +305,25 @@ describe("Team AI Training Hub — demo data integrity", () => {
     expect(momGrowth).toBeGreaterThan(0.05);
     expect(momGrowth).toBeLessThan(0.50);
   });
+
+  it("reports defensible cost-efficiency so training ROI is measurable", () => {
+    const { trainingProgramCostEstimate, costPerHourSaved } = demoAdoptionMetrics;
+    expect(trainingProgramCostEstimate, "training program cost must be positive").toBeGreaterThan(0);
+    expect(costPerHourSaved, "cost per hour saved must be positive").toBeGreaterThan(0);
+
+    // Enterprise AI training cost-per-hour-saved benchmarks fall in the $15–$25 range
+    // (Exceeds AI 2025 research: $15–25 cost per hour saved for mature programs)
+    expect(costPerHourSaved, "cost per hour saved within industry benchmark range").toBeGreaterThanOrEqual(15);
+    expect(costPerHourSaved, "cost per hour saved within industry benchmark range").toBeLessThanOrEqual(25);
+
+    // Verify internal consistency: costPerHourSaved ≈ cost / eligibleHoursSaved
+    const eligibleMinutesSaved = demoUsageLogs
+      .filter(log => log.roiEligible)
+      .reduce((sum, log) => sum + log.estimatedTimeSavedMinutes, 0);
+    const eligibleHoursSaved = eligibleMinutesSaved / 60;
+    const impliedCostPerHour = trainingProgramCostEstimate / eligibleHoursSaved;
+    expect(costPerHourSaved, "cost per hour must be consistent with training cost and eligible time saved").toBe(Math.round(impliedCostPerHour));
+  });
 });
 
 describe("Team AI Training Hub — post-training capability checks", () => {

@@ -485,4 +485,6 @@ export const demoAdoptionMetrics: AdoptionMetrics = {
   adoptionVelocityWoW: 19,
   adoptionVelocityDirection: "accelerating",
   memberCountAboveRoleBenchmark: 3,
+  trainingProgramCostEstimate: 120,
+  costPerHourSaved: 22,
 };

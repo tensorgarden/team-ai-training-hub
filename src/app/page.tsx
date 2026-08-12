@@ -51,12 +51,13 @@ function HeroStats() {
     .reduce((sum, log) => sum + log.estimatedTimeSavedMinutes, 0);
   const hoursSaved = Math.round((minutesSaved / 60) * 10) / 10;
   return (
-    <div className="grid grid-cols-2 md:grid-cols-5 gap-4 mb-8">
+    <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4 mb-8">
       <StatCard label="Team Size" value={String(m.totalTeamMembers)} tone="indigo" />
       <StatCard label="Prompts Used" value={String(m.totalPromptsUsed)} tone="blue" />
       <StatCard label="Adoption Rate" value={`${m.averageAdoptionScore}%`} tone="green" />
       <StatCard label="Training Done" value={`${m.overallTrainingCompletion}%`} tone="amber" />
       <StatCard label="Time Saved" value={`${hoursSaved}h`} tone="purple" />
+      <StatCard label="Cost / Hour Saved" value={`$${m.costPerHourSaved}`} tone="slate" />
     </div>
   );
 }

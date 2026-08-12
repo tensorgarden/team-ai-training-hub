@@ -145,4 +145,6 @@ export interface AdoptionMetrics {
   adoptionVelocityWoW: number;
   adoptionVelocityDirection: "accelerating" | "stable" | "declining";
   memberCountAboveRoleBenchmark: number;
+  trainingProgramCostEstimate: number;
+  costPerHourSaved: number;
 }
