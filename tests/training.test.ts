@@ -324,6 +324,48 @@ describe("Team AI Training Hub — demo data integrity", () => {
     const impliedCostPerHour = trainingProgramCostEstimate / eligibleHoursSaved;
     expect(costPerHourSaved, "cost per hour must be consistent with training cost and eligible time saved").toBe(Math.round(impliedCostPerHour));
   });
+
+  it("assigns every prompt template a named maintenance owner", () => {
+    const memberIds = new Set(demoTeamMembers.map(m => m.id));
+    for (const pt of demoPromptTemplates) {
+      expect(memberIds.has(pt.maintenanceOwnerMemberId), `Template ${pt.id} has unknown maintenance owner ${pt.maintenanceOwnerMemberId}`).toBe(true);
+    }
+  });
+
+  it("records a valid last-review date for every prompt template", () => {
+    for (const pt of demoPromptTemplates) {
+      const reviewed = new Date(pt.lastReviewedAt).getTime();
+      const created = new Date(pt.createdAt).getTime();
+      expect(Number.isNaN(reviewed), `Template ${pt.id} has an invalid lastReviewedAt`).toBe(false);
+      expect(reviewed, `Template ${pt.id} was reviewed before it was created`).toBeGreaterThanOrEqual(created);
+    }
+  });
+
+  it("keeps review-due templates out of the trusted set until content is revalidated", () => {
+    const reviewDue = demoPromptTemplates.filter(pt => pt.contentCurrency === "review_due");
+    const current = demoPromptTemplates.filter(pt => pt.contentCurrency === "current");
+
+    expect(reviewDue.length, "fixture must include stale templates so the review queue is not vacuous").toBeGreaterThan(0);
+    expect(current.length, "fixture must include recently reviewed templates").toBeGreaterThan(0);
+
+    for (const pt of reviewDue) {
+      expect(pt.reviewDueReason?.trim().length ?? 0, `Template ${pt.id} needs a substantial review-due reason`).toBeGreaterThan(50);
+      expect(pt.reviewDueReason?.toLowerCase() ?? "", `Template ${pt.id} reason must name what changed`).toMatch(/update|drift|changed|pre-update/);
+    }
+
+    for (const pt of current) {
+      expect(pt.reviewDueReason, `Template ${pt.id} is current and should not carry a review-due reason`).toBeNull();
+    }
+
+    // Every review-due template must be older than the most recent current template.
+    const latestCurrentReview = Math.max(...current.map(pt => new Date(pt.lastReviewedAt).getTime()));
+    for (const pt of reviewDue) {
+      expect(
+        new Date(pt.lastReviewedAt).getTime(),
+        `Template ${pt.id} marked review_due should predate recently reviewed templates`
+      ).toBeLessThan(latestCurrentReview);
+    }
+  });
 });
 
 describe("Team AI Training Hub — post-training capability checks", () => {

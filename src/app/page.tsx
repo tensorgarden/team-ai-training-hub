@@ -70,12 +70,15 @@ function PromptCard({ template }: { template: PromptTemplate }) {
     hr: "amber", productivity: "slate", data_analysis: "red", creative: "purple"
   } as const;
   const creator = findMember(template.createdBy);
+  const maintenanceOwner = findMember(template.maintenanceOwnerMemberId);
+  const reviewedLabel = new Date(template.lastReviewedAt).toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" });
   return (
     <div className="rounded-2xl bg-white/90 p-5 shadow-sm border border-slate-100 hover:shadow-md transition-shadow">
       <div className="flex items-start justify-between mb-2">
         <div className="flex items-center gap-2">
           <Badge tone={categoryTones[template.category] || "slate"}>{template.category}</Badge>
           <span className="text-xs text-slate-400">{template.usageCount} uses</span>
+          {template.contentCurrency === "review_due" && <Badge tone="amber">review due</Badge>}
         </div>
         <span className="text-amber-500 text-sm font-semibold">{"★".repeat(Math.round(template.averageRating))}{"☆".repeat(5 - Math.round(template.averageRating))}</span>
       </div>
@@ -88,6 +91,14 @@ function PromptCard({ template }: { template: PromptTemplate }) {
         </div>
         <span className="text-xs text-slate-400">by {creator?.fullName || template.createdBy}</span>
       </div>
+      <div className="mt-2 text-xs text-slate-500">
+        Maintained by {maintenanceOwner?.fullName || template.maintenanceOwnerMemberId} · reviewed {reviewedLabel}
+      </div>
+      {template.contentCurrency === "review_due" && template.reviewDueReason && (
+        <p className="mt-2 rounded-xl bg-amber-50 p-2 text-xs leading-5 text-amber-800">
+          {template.reviewDueReason}
+        </p>
+      )}
     </div>
   );
 }

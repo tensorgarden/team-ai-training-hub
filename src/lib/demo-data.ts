@@ -153,6 +153,10 @@ export const demoPromptTemplates: PromptTemplate[] = [
     createdBy: "mem_002",
     createdAt: "2026-03-01T10:00:00Z",
     tags: ["email", "outreach", "personalization"],
+    lastReviewedAt: "2026-08-05T09:00:00Z",
+    maintenanceOwnerMemberId: "mem_002",
+    contentCurrency: "current",
+    reviewDueReason: null,
   },
   {
     id: "pt_002",
@@ -165,6 +169,10 @@ export const demoPromptTemplates: PromptTemplate[] = [
     createdBy: "mem_001",
     createdAt: "2026-03-05T14:00:00Z",
     tags: ["content", "seo", "writing"],
+    lastReviewedAt: "2026-08-08T09:00:00Z",
+    maintenanceOwnerMemberId: "mem_001",
+    contentCurrency: "current",
+    reviewDueReason: null,
   },
   {
     id: "pt_003",
@@ -177,6 +185,10 @@ export const demoPromptTemplates: PromptTemplate[] = [
     createdBy: "mem_004",
     createdAt: "2026-03-10T08:00:00Z",
     tags: ["support", "templates", "canned-responses"],
+    lastReviewedAt: "2026-08-01T09:00:00Z",
+    maintenanceOwnerMemberId: "mem_004",
+    contentCurrency: "current",
+    reviewDueReason: null,
   },
   {
     id: "pt_004",
@@ -189,6 +201,10 @@ export const demoPromptTemplates: PromptTemplate[] = [
     createdBy: "mem_003",
     createdAt: "2026-03-15T11:00:00Z",
     tags: ["code", "review", "quality"],
+    lastReviewedAt: "2026-03-15T11:00:00Z",
+    maintenanceOwnerMemberId: "mem_003",
+    contentCurrency: "review_due",
+    reviewDueReason: "Checklist targets the pre-update model; code-review output behavior changed after the June 2026 reasoning-model update. Revalidate the checklist and sample outputs before reuse.",
   },
   {
     id: "pt_005",
@@ -201,6 +217,10 @@ export const demoPromptTemplates: PromptTemplate[] = [
     createdBy: "mem_005",
     createdAt: "2026-03-20T09:00:00Z",
     tags: ["meetings", "notes", "productivity"],
+    lastReviewedAt: "2026-08-02T09:00:00Z",
+    maintenanceOwnerMemberId: "mem_005",
+    contentCurrency: "current",
+    reviewDueReason: null,
   },
   {
     id: "pt_006",
@@ -213,6 +233,10 @@ export const demoPromptTemplates: PromptTemplate[] = [
     createdBy: "mem_005",
     createdAt: "2026-04-01T08:00:00Z",
     tags: ["hiring", "templates", "writing"],
+    lastReviewedAt: "2026-07-28T09:00:00Z",
+    maintenanceOwnerMemberId: "mem_005",
+    contentCurrency: "current",
+    reviewDueReason: null,
   },
   {
     id: "pt_007",
@@ -225,6 +249,10 @@ export const demoPromptTemplates: PromptTemplate[] = [
     createdBy: "mem_002",
     createdAt: "2026-04-10T10:00:00Z",
     tags: ["sales", "research", "preparation"],
+    lastReviewedAt: "2026-08-06T09:00:00Z",
+    maintenanceOwnerMemberId: "mem_002",
+    contentCurrency: "current",
+    reviewDueReason: null,
   },
   {
     id: "pt_008",
@@ -237,6 +265,10 @@ export const demoPromptTemplates: PromptTemplate[] = [
     createdBy: "mem_001",
     createdAt: "2026-04-20T13:00:00Z",
     tags: ["analytics", "reporting", "executive"],
+    lastReviewedAt: "2026-04-20T13:00:00Z",
+    maintenanceOwnerMemberId: "mem_001",
+    contentCurrency: "review_due",
+    reviewDueReason: "Output structure drifted after the May 2026 model update; verify the insights, trends, and anomaly sections still render reliably before executive reuse.",
   },
 ];
 

@@ -39,6 +39,10 @@ export interface PromptTemplate {
   createdBy: string;
   createdAt: string;
   tags: string[];
+  lastReviewedAt: string;
+  maintenanceOwnerMemberId: string;
+  contentCurrency: "current" | "review_due";
+  reviewDueReason: string | null;
 }
 
 export interface TrainingModule {
