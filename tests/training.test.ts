@@ -458,6 +458,34 @@ describe("Team AI Training Hub — post-training capability checks", () => {
       expect(cc.scenario.trim().length, `${cc.id} scenario is too short`).toBeGreaterThan(60);
     }
   });
+
+  it("does not treat a passed capability check as permanent evidence once the underlying model changes", () => {
+    const memberIdsLocal = new Set(demoTeamMembers.map(m => m.id));
+    const recertRequired = demoCapabilityChecks.filter(cc => Boolean(cc.recertificationDueAt));
+
+    expect(recertRequired.length, "fixture must include at least one check flagged for recertification").toBeGreaterThan(0);
+
+    for (const cc of recertRequired) {
+      expect(cc.status, `${cc.id} must have originally passed before recertification applies`).toBe("passed");
+      expect(memberIdsLocal.has(cc.memberId), `${cc.id} recertification references unknown member ${cc.memberId}`).toBe(true);
+
+      const reason = cc.recertificationReason ?? "";
+      expect(reason.trim().length, `${cc.id} needs a substantial recertification reason`).toBeGreaterThan(80);
+      expect(reason.toLowerCase(), `${cc.id} reason must name what changed`).toMatch(/model|update|behavior|output/);
+
+      const attemptedTime = new Date(cc.attemptedAt ?? "").getTime();
+      const dueTime = new Date(cc.recertificationDueAt ?? "").getTime();
+      expect(Number.isNaN(dueTime), `${cc.id} has an invalid recertification due date`).toBe(false);
+      expect(dueTime, `${cc.id} recertification deadline must follow the original passed attempt`).toBeGreaterThan(attemptedTime);
+    }
+
+    // Checks with no recertification flag must not carry a dangling recertification reason.
+    for (const cc of demoCapabilityChecks) {
+      if (!cc.recertificationDueAt) {
+        expect(cc.recertificationReason, `${cc.id} has a recertification reason but no due date`).toBeUndefined();
+      }
+    }
+  });
 });
 
 describe("Team AI Training Hub — shadow AI signal governance", () => {

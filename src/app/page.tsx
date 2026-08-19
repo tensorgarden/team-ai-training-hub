@@ -280,6 +280,49 @@ function ReadinessReviewQueue() {
   );
 }
 
+function RecertificationRow({ check }: { check: CapabilityCheck }) {
+  const member = findMember(check.memberId);
+  const trainingModule = demoTrainingModules.find(tm => tm.id === check.moduleId);
+  const dueLabel = check.recertificationDueAt
+    ? new Date(check.recertificationDueAt).toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" })
+    : "Unscheduled";
+  const overdue = check.recertificationDueAt ? new Date(check.recertificationDueAt).getTime() < Date.now() : false;
+
+  return (
+    <div className="rounded-2xl border border-blue-100 bg-blue-50/60 p-4 text-sm">
+      <div className="flex items-start justify-between gap-3">
+        <div>
+          <h3 className="font-bold text-slate-900">{member?.fullName || check.memberId}</h3>
+          <p className="mt-0.5 text-xs text-blue-700">{trainingModule?.title || check.moduleId} · re-verify by {dueLabel}</p>
+        </div>
+        <Badge tone={overdue ? "red" : "blue"}>{overdue ? "overdue" : "revalidate"}</Badge>
+      </div>
+      <p className="mt-2 text-xs leading-5 text-slate-600">{check.recertificationReason || "No recertification reason recorded."}</p>
+    </div>
+  );
+}
+
+function RecertificationQueue() {
+  const dueForRecert = demoCapabilityChecks.filter(check => Boolean(check.recertificationDueAt));
+
+  if (dueForRecert.length === 0) return null;
+
+  return (
+    <Card>
+      <div className="mb-4 flex items-center justify-between">
+        <h2 className="text-lg font-bold text-slate-900">Capability Recertification</h2>
+        <Badge tone="blue">{dueForRecert.length} due for re-verification</Badge>
+      </div>
+      <p className="mb-4 text-sm text-slate-500">
+        A passed capability check is not permanent evidence of readiness. When the underlying model behavior changes, the prior pass gets a re-verification deadline instead of staying trusted indefinitely.
+      </p>
+      <div className="space-y-3">
+        {dueForRecert.map(check => <RecertificationRow key={check.id} check={check} />)}
+      </div>
+    </Card>
+  );
+}
+
 function ShadowAiSignalRow({ signal }: { signal: ShadowAiToolSignal }) {
   const member = findMember(signal.memberId);
   const reviewer = findMember(signal.reviewerMemberId);
@@ -498,6 +541,7 @@ export default function Home() {
         <div className="space-y-6">
           <TeamAdoption />
           <ReadinessReviewQueue />
+          <RecertificationQueue />
           <ShadowAiSignals />
           <BusinessImpactBenchmarks />
           <TeamLeaderboard />

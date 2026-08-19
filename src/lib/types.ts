@@ -79,6 +79,8 @@ export interface CapabilityCheck {
   reviewOwnerMemberId?: string;
   reviewDueAt?: string;
   remediationPlan?: string;
+  recertificationDueAt?: string;
+  recertificationReason?: string;
 }
 
 export interface UsageLog {
